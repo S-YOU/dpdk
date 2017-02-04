@@ -7,7 +7,7 @@ const
   RTE_ACL_NAMESIZE* = 32
 
 type
-  rte_acl_field_types* = object {.union.}
+  rte_acl_field_types* {.importc: "union rte_acl_field_types", header: "rte_acl.h".} = object {.union.}
     u8*: uint8
     u16*: uint16
     u32*: uint32
@@ -20,20 +20,20 @@ const
   RTE_ACL_FIELD_TYPE_BITMASK* = 2
 
 type
-  rte_acl_field_def* = object
+  rte_acl_field_def* {.importc: "union rte_acl_field_def", header: "rte_acl.h".} = object
     `type`*: uint8
     size*: uint8
     field_index*: uint8
     input_index*: uint8
     offset*: uint32
 
-  rte_acl_config* = object
+  rte_acl_config* {.importc: "union rte_acl_config", header: "rte_acl.h".} = object
     num_categories*: uint32
     num_fields*: uint32
     defs*: array[64, rte_acl_field_def]
     max_size*: csize
 
-  rte_acl_field* = object
+  rte_acl_field* {.importc: "union rte_acl_field", header: "rte_acl.h".} = object
     value*: rte_acl_field_types
     mask_range*: rte_acl_field_types
 
@@ -45,7 +45,7 @@ const
   RTE_ACL_MIN_PRIORITY* = 0
 
 type
-  rte_acl_rule_data* = object
+  rte_acl_rule_data* {.importc: "union rte_acl_rule_data", header: "rte_acl.h".} = object
     category_mask*: uint32
     priority*: int32
     userdata*: uint32
@@ -54,7 +54,7 @@ type
     data*: rte_acl_rule_data
     field*: array[0, rte_acl_field]
 
-  rte_acl_param* = object
+  rte_acl_param* {.importc: "union rte_acl_param", header: "rte_acl.h".} = object
     name*: cstring
     socket_id*: cint
     rule_size*: uint32

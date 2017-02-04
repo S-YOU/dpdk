@@ -1,10 +1,10 @@
 type
   cmdline_fixed_string_t* = array[128, char]
   cmdline_multi_string_t* = array[4096, char]
-  cmdline_token_string_data* = object
+  cmdline_token_string_data* {.importc: "struct cmdline_token_string_data", header: "cmdline_parse_string.h".} = object
     str*: cstring
 
-  cmdline_token_string* = object
+  cmdline_token_string* {.importc: "struct cmdline_token_string", header: "cmdline_parse_string.h".} = object
     hdr*: cmdline_token_hdr
     string_data*: cmdline_token_string_data
 

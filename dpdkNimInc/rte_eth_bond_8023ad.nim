@@ -24,29 +24,29 @@ type
 
 
 type
-  slow_protocol* = object
+  slow_protocol* {.importc: "struct slow_protocol", header: "rte_eth_bond_8023ad.h".} = object
     subtype*: uint8
     reserved_119*: array[119, uint8]
 
-  slow_protocol_frame* = object
+  slow_protocol_frame* {.importc: "struct slow_protocol_frame", header: "rte_eth_bond_8023ad.h".} = object
     eth_hdr*: ether_hdr
     slow_protocol*: slow_protocol
 
-  port_params* = object
+  port_params* {.importc: "struct port_params", header: "rte_eth_bond_8023ad.h".} = object
     system_priority*: uint16
     system*: ether_addr
     key*: uint16
     port_priority*: uint16
     port_number*: uint16
 
-  lacpdu_actor_partner_params* = object
+  lacpdu_actor_partner_params* {.importc: "struct lacpdu_actor_partner_params", header: "rte_eth_bond_8023ad.h".} = object
     tlv_type_info*: uint8
     info_length*: uint8
     port_params*: port_params
     state*: uint8
     reserved_3*: array[3, uint8]
 
-  lacpdu* = object
+  lacpdu* {.importc: "struct lacpdu", header: "rte_eth_bond_8023ad.h".} = object
     subtype*: uint8
     version_number*: uint8
     actor*: lacpdu_actor_partner_params
@@ -59,11 +59,11 @@ type
     terminator_length*: uint8
     reserved_50*: array[50, uint8]
 
-  lacpdu_header* = object
+  lacpdu_header* {.importc: "struct lacpdu_header", header: "rte_eth_bond_8023ad.h".} = object
     eth_hdr*: ether_hdr
     lacpdu*: lacpdu
 
-  marker* = object
+  marker* {.importc: "struct marker", header: "rte_eth_bond_8023ad.h".} = object
     subtype*: uint8
     version_number*: uint8
     tlv_type_marker*: uint8
@@ -76,11 +76,11 @@ type
     terminator_length*: uint8
     reserved_90*: array[90, uint8]
 
-  marker_header* = object
+  marker_header* {.importc: "struct marker_header", header: "rte_eth_bond_8023ad.h".} = object
     eth_hdr*: ether_hdr
     marker*: marker
 
-  rte_eth_bond_8023ad_conf* = object
+  rte_eth_bond_8023ad_conf* {.importc: "struct rte_eth_bond_8023ad_conf", header: "rte_eth_bond_8023ad.h".} = object
     fast_periodic_ms*: uint32
     slow_periodic_ms*: uint32
     short_timeout_ms*: uint32
@@ -91,7 +91,7 @@ type
     update_timeout_ms*: uint32
     slowrx_cb*: rte_eth_bond_8023ad_ext_slowrx_fn
 
-  rte_eth_bond_8023ad_slave_info* = object
+  rte_eth_bond_8023ad_slave_info* {.importc: "struct rte_eth_bond_8023ad_slave_info", header: "rte_eth_bond_8023ad.h".} = object
     selected*: rte_bond_8023ad_selection
     actor_state*: uint8
     actor*: port_params

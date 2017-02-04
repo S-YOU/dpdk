@@ -4,18 +4,18 @@ type
 
 
 type
-  rte_meter_srtcm_params* = object
+  rte_meter_srtcm_params* {.importc: "struct rte_meter_srtcm_params", header: "rte_meter.h".} = object
     cir*: uint64
     cbs*: uint64
     ebs*: uint64
 
-  rte_meter_trtcm_params* = object
+  rte_meter_trtcm_params* {.importc: "struct rte_meter_trtcm_params", header: "rte_meter.h".} = object
     cir*: uint64
     pir*: uint64
     cbs*: uint64
     pbs*: uint64
 
-  rte_meter_srtcm* = object
+  rte_meter_srtcm* {.importc: "struct rte_meter_srtcm", header: "rte_meter.h".} = object
     time*: uint64
     tc*: uint64
     te*: uint64
@@ -24,7 +24,7 @@ type
     cir_period*: uint64
     cir_bytes_per_period*: uint64 
 
-  rte_meter_trtcm* = object
+  rte_meter_trtcm* {.importc: "struct rte_meter_trtcm", header: "rte_meter.h".} = object
     time_tc*: uint64
     time_tp*: uint64
     tc*: uint64

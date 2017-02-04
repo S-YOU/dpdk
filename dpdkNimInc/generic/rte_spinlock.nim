@@ -1,5 +1,5 @@
 type
-  rte_spinlock_t* = object
+  rte_spinlock_t* {.importc: "struct rte_spinlock_t", header: "rte_spinlock.h".} = object
     locked*: cint
 
 
@@ -17,7 +17,7 @@ proc rte_spinlock_is_locked*(sl: ptr rte_spinlock_t): cint {.inline, importc, he
 # proc rte_spinlock_unlock_tm*(sl: ptr rte_spinlock_t) {.inline, importc, header: "rte_spinlock.h".}
 #proc rte_spinlock_trylock_tm*(sl: ptr rte_spinlock_t): cint {.inline, importc, header: "rte_spinlock.h".}
 type
-  rte_spinlock_recursive_t* = object
+  rte_spinlock_recursive_t* {.importc: "struct rte_spinlock_recursive_t", header: "rte_spinlock.h".} = object
     sl*: rte_spinlock_t
     user*: cint
     count*: cint

@@ -1,5 +1,5 @@
 type
-  rte_reciprocal* = object
+  rte_reciprocal* {.importc: "struct rte_reciprocal", header: "rte_reciprocal.h".} = object
     m*: uint32
     sh1*: uint8
     sh2*: uint8

@@ -13,7 +13,7 @@ type
 
 
 type
-  rte_config* = object
+  rte_config* {.importc: "struct rte_config", header: "rte_eal.h".} = object
     master_lcore*: uint32
     lcore_count*: uint32
     lcore_role*: array[RTE_MAX_LCORE, rte_lcore_role_t]

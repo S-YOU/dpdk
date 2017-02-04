@@ -7,7 +7,7 @@ type
 
 
 type
-  lcore_config* = object
+  lcore_config* {.importc: "struct lcore_config", header: "rte_jobstats.h".} = object
     detected*: cuint
     thread_id*: pthread_t
     pipe_master2slave*: array[2, cint]

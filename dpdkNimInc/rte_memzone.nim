@@ -15,7 +15,7 @@ type
     `addr`*: pointer
     addr_64*: uint64
 
-  rte_memzone* = object
+  rte_memzone* {.importc: "struct rte_memzone", header: "rte_memzone.h".} = object
     name*: array[32, char]
     phys_addr*: phys_addr_t
     ano_497414248*: INNER_C_UNION_480891241

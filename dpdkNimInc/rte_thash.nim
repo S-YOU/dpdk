@@ -7,7 +7,7 @@ type
     ano_141354347*: INNER_C_STRUCT_2603012939
     sctp_tag*: uint32
 
-  rte_ipv4_tuple* = object
+  rte_ipv4_tuple* {.importc: "struct rte_ipv4_tuple", header: "rte_thash.h".} = object
     src_addr*: uint32
     dst_addr*: uint32
     ano_2609771061*: INNER_C_UNION_116569836
@@ -20,12 +20,12 @@ type
     ano_2684124607*: INNER_C_STRUCT_2144423927
     sctp_tag*: uint32
 
-  rte_ipv6_tuple* = object
+  rte_ipv6_tuple* {.importc: "struct rte_ipv6_tuple", header: "rte_thash.h".} = object
     src_addr*: array[16, uint8]
     dst_addr*: array[16, uint8]
     ano_3398619765*: INNER_C_UNION_2659340096
 
-  rte_thash_tuple* = object {.union.}
+  rte_thash_tuple* {.importc: "struct rte_thash_tuple", header: "rte_thash.h", union.} = object
     v4*: rte_ipv4_tuple
     v6*: rte_ipv6_tuple
 

@@ -18,7 +18,7 @@ type
     pci*: INNER_C_STRUCT_2074183052
     virt*: INNER_C_STRUCT_2098967565
 
-  rte_devargs* = object
+  rte_devargs* {.importc: "struct rte_devargs", header: "rte_devargs.h".} = object
     next*: INNER_C_STRUCT_2839750623
     `type`*: rte_devtype
     ano_2115490571*: INNER_C_UNION_2065921546

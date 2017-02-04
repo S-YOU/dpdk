@@ -5,11 +5,11 @@ const
 
 type
   arg_handler_t* = proc (key: cstring; value: cstring; opaque: pointer): cint {.cdecl.}
-  rte_kvargs_pair* = object
+  rte_kvargs_pair* {.importc: "struct rte_kvargs_pair", header: "rte_kvargs.h".} = object
     key*: cstring
     value*: cstring
 
-  rte_kvargs* = object
+  rte_kvargs* {.importc: "struct rte_kvargs", header: "rte_kvargs.h".} = object
     str*: cstring
     count*: cuint
     pairs*: array[32, rte_kvargs_pair]

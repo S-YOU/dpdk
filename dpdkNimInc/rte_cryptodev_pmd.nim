@@ -2,107 +2,16 @@ type
   rte_crypto_op_type* = enum
     RTE_CRYPTO_OP_TYPE_UNDEFINED, RTE_CRYPTO_OP_TYPE_SYMMETRIC
 
+
+type
   rte_crypto_op_status* = enum
     RTE_CRYPTO_OP_STATUS_SUCCESS, RTE_CRYPTO_OP_STATUS_NOT_PROCESSED,
     RTE_CRYPTO_OP_STATUS_ENQUEUED, RTE_CRYPTO_OP_STATUS_AUTH_FAILED,
     RTE_CRYPTO_OP_STATUS_INVALID_SESSION, RTE_CRYPTO_OP_STATUS_INVALID_ARGS,
     RTE_CRYPTO_OP_STATUS_ERROR
 
-  rte_crypto_sym_op_sess_type* = enum
-    RTE_CRYPTO_SYM_OP_WITH_SESSION, RTE_CRYPTO_SYM_OP_SESSIONLESS
 
-  rte_cryptodev_type* = enum
-    RTE_CRYPTODEV_NULL_PMD = 1, RTE_CRYPTODEV_AESNI_GCM_PMD,
-    RTE_CRYPTODEV_AESNI_MB_PMD, RTE_CRYPTODEV_QAT_SYM_PMD,
-    RTE_CRYPTODEV_SNOW3G_PMD, RTE_CRYPTODEV_KASUMI_PMD
-
-  INNER_C_STRUCT_2985627708* = object
-    dev_id*: uint8
-    dev_type*: rte_cryptodev_type
-    mp*: ptr rte_mempool
-
-  rte_cryptodev_sym_session* = object
-    ano_3010412218*: INNER_C_STRUCT_2985627708
-    private*: array[0, char]
-
-  rte_crypto_sym_xform_type* = enum
-    RTE_CRYPTO_SYM_XFORM_NOT_SPECIFIED = 0, RTE_CRYPTO_SYM_XFORM_AUTH,
-    RTE_CRYPTO_SYM_XFORM_CIPHER
-
-  rte_crypto_auth_operation* = enum
-    RTE_CRYPTO_AUTH_OP_VERIFY, RTE_CRYPTO_AUTH_OP_GENERATE
-
-  INNER_C_STRUCT_3345142729* = object
-    data*: ptr uint8
-    length*: csize
-
-  rte_crypto_auth_algorithm* = enum
-    RTE_CRYPTO_AUTH_NULL = 1, RTE_CRYPTO_AUTH_AES_CBC_MAC, RTE_CRYPTO_AUTH_AES_CCM,
-    RTE_CRYPTO_AUTH_AES_CMAC, RTE_CRYPTO_AUTH_AES_GCM, RTE_CRYPTO_AUTH_AES_GMAC,
-    RTE_CRYPTO_AUTH_AES_XCBC_MAC, RTE_CRYPTO_AUTH_KASUMI_F9, RTE_CRYPTO_AUTH_MD5,
-    RTE_CRYPTO_AUTH_MD5_HMAC, RTE_CRYPTO_AUTH_SHA1, RTE_CRYPTO_AUTH_SHA1_HMAC,
-    RTE_CRYPTO_AUTH_SHA224, RTE_CRYPTO_AUTH_SHA224_HMAC, RTE_CRYPTO_AUTH_SHA256,
-    RTE_CRYPTO_AUTH_SHA256_HMAC, RTE_CRYPTO_AUTH_SHA384,
-    RTE_CRYPTO_AUTH_SHA384_HMAC, RTE_CRYPTO_AUTH_SHA512,
-    RTE_CRYPTO_AUTH_SHA512_HMAC, RTE_CRYPTO_AUTH_SNOW3G_UIA2,
-    RTE_CRYPTO_AUTH_ZUC_EIA3, RTE_CRYPTO_AUTH_LIST_END
-
-  rte_crypto_auth_xform* = object
-    op*: rte_crypto_auth_operation
-    algo*: rte_crypto_auth_algorithm
-    key*: INNER_C_STRUCT_3345142729
-    digest_length*: uint32
-    add_auth_data_length*: uint32
-
-  rte_crypto_cipher_operation* = enum
-    RTE_CRYPTO_CIPHER_OP_ENCRYPT, RTE_CRYPTO_CIPHER_OP_DECRYPT
-
-  INNER_C_STRUCT_247578448* = object
-    data*: ptr uint8
-    length*: csize
 type
-  rte_crypto_cipher_algorithm* = enum
-    RTE_CRYPTO_CIPHER_NULL = 1, RTE_CRYPTO_CIPHER_3DES_CBC,
-    RTE_CRYPTO_CIPHER_3DES_CTR, RTE_CRYPTO_CIPHER_3DES_ECB,
-    RTE_CRYPTO_CIPHER_AES_CBC, RTE_CRYPTO_CIPHER_AES_CCM,
-    RTE_CRYPTO_CIPHER_AES_CTR, RTE_CRYPTO_CIPHER_AES_ECB,
-    RTE_CRYPTO_CIPHER_AES_F8, RTE_CRYPTO_CIPHER_AES_GCM,
-    RTE_CRYPTO_CIPHER_AES_XTS, RTE_CRYPTO_CIPHER_ARC4,
-    RTE_CRYPTO_CIPHER_KASUMI_F8, RTE_CRYPTO_CIPHER_SNOW3G_UEA2,
-    RTE_CRYPTO_CIPHER_ZUC_EEA3, RTE_CRYPTO_CIPHER_LIST_END
-
-  rte_crypto_cipher_xform* = object
-    op*: rte_crypto_cipher_operation
-    algo*: rte_crypto_cipher_algorithm
-    key*: INNER_C_STRUCT_247578448
-
-  INNER_C_UNION_578303810* = object {.union.}
-    auth*: rte_crypto_auth_xform
-    cipher*: rte_crypto_cipher_xform
-
-  rte_crypto_sym_xform* = object
-    next*: ptr rte_crypto_sym_xform
-    `type`*: rte_crypto_sym_xform_type
-    ano_594826815*: INNER_C_UNION_578303810
-
-
-  INNER_C_UNION_1391937029* = object {.union.}
-    session*: ptr rte_cryptodev_sym_session
-    xform*: ptr rte_crypto_sym_xform
-  
-  INNER_C_STRUCT_2574929262* = object
-    offset*: uint32
-    length*: uint32
-
-  INNER_C_STRUCT_357537179* = object
-    data*: ptr uint8
-    phys_addr*: phys_addr_t
-    length*: uint16
-
-  INNER_C_STRUCT_1424983049* = object
-    data*: INNER_C_STRUCT_2574929262
-    iv*: INNER_C_STRUCT_357537179
-
   INNER_C_STRUCT_3450307168* = object
     offset*: uint32
     length*: uint32
@@ -117,11 +26,119 @@ type
     phys_addr*: phys_addr_t
     length*: uint16
 
+
   INNER_C_STRUCT_3302079714* = object
     data*: INNER_C_STRUCT_3450307168
     digest*: INNER_C_STRUCT_2277688667
     aad*: INNER_C_STRUCT_1885657366
-  rte_crypto_sym_op* = object
+
+  INNER_C_STRUCT_2574929262* = object
+    offset*: uint32
+    length*: uint32
+
+  INNER_C_STRUCT_357537179* = object
+    data*: ptr uint8
+    phys_addr*: phys_addr_t
+    length*: uint16
+
+
+
+  INNER_C_STRUCT_1424983049* = object
+    data*: INNER_C_STRUCT_2574929262
+    iv*: INNER_C_STRUCT_357537179
+
+  rte_cryptodev_type* = enum
+    RTE_CRYPTODEV_NULL_PMD = 1, RTE_CRYPTODEV_AESNI_GCM_PMD,
+    RTE_CRYPTODEV_AESNI_MB_PMD, RTE_CRYPTODEV_QAT_SYM_PMD,
+    RTE_CRYPTODEV_SNOW3G_PMD, RTE_CRYPTODEV_KASUMI_PMD
+
+  INNER_C_STRUCT_2985627708* = object
+    dev_id*: uint8
+    dev_type*: rte_cryptodev_type
+    mp*: ptr rte_mempool
+
+  rte_cryptodev_sym_session* {.importc: "struct rte_cryptodev_sym_session", header: "rte_cryptodev.h".} = object
+    ano_3010412218*: INNER_C_STRUCT_2985627708
+    private*: array[0, char]
+
+  rte_crypto_sym_xform_type* = enum
+    RTE_CRYPTO_SYM_XFORM_NOT_SPECIFIED = 0, RTE_CRYPTO_SYM_XFORM_AUTH,
+    RTE_CRYPTO_SYM_XFORM_CIPHER
+
+type
+  INNER_C_STRUCT_3345142729* = object
+    data*: ptr uint8
+    length*: csize
+
+  rte_crypto_auth_operation* = enum
+    RTE_CRYPTO_AUTH_OP_VERIFY, RTE_CRYPTO_AUTH_OP_GENERATE
+
+  rte_crypto_auth_algorithm* = enum
+    RTE_CRYPTO_AUTH_NULL = 1, RTE_CRYPTO_AUTH_AES_CBC_MAC, RTE_CRYPTO_AUTH_AES_CCM,
+    RTE_CRYPTO_AUTH_AES_CMAC, RTE_CRYPTO_AUTH_AES_GCM, RTE_CRYPTO_AUTH_AES_GMAC,
+    RTE_CRYPTO_AUTH_AES_XCBC_MAC, RTE_CRYPTO_AUTH_KASUMI_F9, RTE_CRYPTO_AUTH_MD5,
+    RTE_CRYPTO_AUTH_MD5_HMAC, RTE_CRYPTO_AUTH_SHA1, RTE_CRYPTO_AUTH_SHA1_HMAC,
+    RTE_CRYPTO_AUTH_SHA224, RTE_CRYPTO_AUTH_SHA224_HMAC, RTE_CRYPTO_AUTH_SHA256,
+    RTE_CRYPTO_AUTH_SHA256_HMAC, RTE_CRYPTO_AUTH_SHA384,
+    RTE_CRYPTO_AUTH_SHA384_HMAC, RTE_CRYPTO_AUTH_SHA512,
+    RTE_CRYPTO_AUTH_SHA512_HMAC, RTE_CRYPTO_AUTH_SNOW3G_UIA2,
+    RTE_CRYPTO_AUTH_ZUC_EIA3, RTE_CRYPTO_AUTH_LIST_END
+
+
+
+  rte_crypto_auth_xform* {.importc: "struct rte_crypto_auth_xform", header: "rte_crypto_sym.h".} = object
+    op*: rte_crypto_auth_operation
+    algo*: rte_crypto_auth_algorithm
+    key*: INNER_C_STRUCT_3345142729
+    digest_length*: uint32
+    add_auth_data_length*: uint32
+
+  INNER_C_STRUCT_247578448* = object
+    data*: ptr uint8
+    length*: csize
+
+  rte_crypto_cipher_operation* = enum
+    RTE_CRYPTO_CIPHER_OP_ENCRYPT, RTE_CRYPTO_CIPHER_OP_DECRYPT
+
+  rte_crypto_cipher_algorithm* = enum
+    RTE_CRYPTO_CIPHER_NULL = 1, RTE_CRYPTO_CIPHER_3DES_CBC,
+    RTE_CRYPTO_CIPHER_3DES_CTR, RTE_CRYPTO_CIPHER_3DES_ECB,
+    RTE_CRYPTO_CIPHER_AES_CBC, RTE_CRYPTO_CIPHER_AES_CCM,
+    RTE_CRYPTO_CIPHER_AES_CTR, RTE_CRYPTO_CIPHER_AES_ECB,
+    RTE_CRYPTO_CIPHER_AES_F8, RTE_CRYPTO_CIPHER_AES_GCM,
+    RTE_CRYPTO_CIPHER_AES_XTS, RTE_CRYPTO_CIPHER_ARC4,
+    RTE_CRYPTO_CIPHER_KASUMI_F8, RTE_CRYPTO_CIPHER_SNOW3G_UEA2,
+    RTE_CRYPTO_CIPHER_ZUC_EEA3, RTE_CRYPTO_CIPHER_LIST_END
+
+
+
+  rte_crypto_cipher_xform* {.importc: "struct rte_crypto_cipher_xform", header: "rte_crypto_sym.h".} = object
+    op*: rte_crypto_cipher_operation
+    algo*: rte_crypto_cipher_algorithm
+    key*: INNER_C_STRUCT_247578448
+
+
+
+  INNER_C_UNION_578303810* = object {.union.}
+    auth*: rte_crypto_auth_xform
+    cipher*: rte_crypto_cipher_xform
+
+  rte_crypto_sym_xform* {.importc: "struct rte_crypto_sym_xform", header: "rte_crypto_sym.h".} = object
+    next*: ptr rte_crypto_sym_xform
+    `type`*: rte_crypto_sym_xform_type
+    ano_594826815*: INNER_C_UNION_578303810
+
+
+  INNER_C_UNION_1391937029* = object {.union.}
+    session*: ptr rte_cryptodev_sym_session
+    xform*: ptr rte_crypto_sym_xform
+
+  rte_crypto_sym_op_sess_type* = enum
+    RTE_CRYPTO_SYM_OP_WITH_SESSION, RTE_CRYPTO_SYM_OP_SESSIONLESS
+
+
+
+  rte_crypto_sym_op* {.importc: "struct rte_crypto_sym_op", header: "rte_crypto_sym.h".} = object
     m_src*: ptr rte_mbuf
     m_dst*: ptr rte_mbuf
     sess_type*: rte_crypto_sym_op_sess_type
@@ -132,7 +149,7 @@ type
   INNER_C_UNION_543915601* = object {.union.}
     sym*: ptr rte_crypto_sym_op
 
-  rte_crypto_op* = object
+  rte_crypto_op* {.importc: "struct rte_crypto_op", header: "rte_crypto.h".} = object
     `type`*: rte_crypto_op_type
     status*: rte_crypto_op_status
     mempool*: ptr rte_mempool
@@ -157,6 +174,8 @@ proc rte_crypto_op_sym_xforms_alloc*(op: ptr rte_crypto_op; nb_xforms: uint8): p
 
 proc rte_crypto_op_attach_sym_session*(op: ptr rte_crypto_op;
                                       sess: ptr rte_cryptodev_sym_session): cint {.inline, importc, header: "rte_crypto.h".}
+
+
 
 const
   RTE_CRYPTODEV_FF_SYMMETRIC_CRYPTO* = (1 shl 0)
@@ -215,21 +234,21 @@ type
     auth*: INNER_C_STRUCT_3672357354
     cipher*: INNER_C_STRUCT_930302951
 
-  rte_cryptodev_symmetric_capability* = object
+  rte_cryptodev_symmetric_capability* {.importc: "struct rte_cryptodev_symmetric_capability", header: "rte_cryptodev.h".} = object
     xform_type*: rte_crypto_sym_xform_type
     ano_1735674661*: INNER_C_UNION_3664095850
 
   INNER_C_UNION_2474954340* = object {.union.}
     sym*: rte_cryptodev_symmetric_capability
 
-  rte_cryptodev_capabilities* = object
+  rte_cryptodev_capabilities* {.importc: "struct rte_cryptodev_capabilities", header: "rte_cryptodev.h".} = object
     op*: rte_crypto_op_type
     ano_2483215840*: INNER_C_UNION_2474954340
 
   INNER_C_STRUCT_2390685907* = object
     max_nb_sessions*: cuint
 
-  rte_cryptodev_info* = object
+  rte_cryptodev_info* {.importc: "struct rte_cryptodev_info", header: "rte_cryptodev.h".} = object
     driver_name*: cstring
     dev_type*: rte_cryptodev_type
     pci_dev*: ptr rte_pci_device
@@ -244,18 +263,18 @@ type
 
 
 type
-  rte_cryptodev_qp_conf* = object
+  rte_cryptodev_qp_conf* {.importc: "struct rte_cryptodev_qp_conf", header: "rte_cryptodev.h".} = object
     nb_descriptors*: uint32
 
   rte_cryptodev_cb_fn* = proc (dev_id: uint8; event: rte_cryptodev_event_type;
                             cb_arg: pointer) {.cdecl.}
-  rte_cryptodev_stats* = object
+  rte_cryptodev_stats* {.importc: "struct rte_cryptodev_stats", header: "rte_cryptodev.h".} = object
     enqueued_count*: uint64
     dequeued_count*: uint64
     enqueue_err_count*: uint64
     dequeue_err_count*: uint64
 
-  rte_crypto_vdev_init_params* = object
+  rte_crypto_vdev_init_params* {.importc: "struct rte_crypto_vdev_init_params", header: "rte_cryptodev.h".} = object
     max_nb_queue_pairs*: cuint
     max_nb_sessions*: cuint
     socket_id*: uint8
@@ -268,7 +287,7 @@ type
     nb_objs*: uint32
     cache_size*: uint32
 
-  rte_cryptodev_config* = object
+  rte_cryptodev_config* {.importc: "struct rte_cryptodev_config", header: "rte_cryptodev.h".} = object
     socket_id*: cint
     nb_queue_pairs*: uint16
     session_mp*: INNER_C_STRUCT_3075585876
@@ -282,9 +301,11 @@ type
     tqh_last*: ptr ptr rte_cryptodev_callback
 
   cryptodev_init_t* = proc (drv: ptr rte_cryptodev_driver; dev: ptr rte_cryptodev): cint {.cdecl.}
+
   cryptodev_uninit_t* = proc (drv: ptr rte_cryptodev_driver; dev: ptr rte_cryptodev): cint {.cdecl.}
 
-  rte_cryptodev_driver* = object
+
+  rte_cryptodev_driver* {.importc: "struct rte_cryptodev_driver", header: "rte_cryptodev_pmd.h".} = object
     pci_drv*: rte_pci_driver
     dev_private_size*: cuint
     cryptodev_init*: cryptodev_init_t
@@ -315,7 +336,8 @@ type
       xform: ptr rte_crypto_sym_xform; session_private: pointer): pointer {.cdecl.}
   cryptodev_sym_free_session_t* = proc (dev: ptr rte_cryptodev;
                                      session_private: pointer) {.cdecl.}
-  rte_cryptodev_ops* = object
+
+  rte_cryptodev_ops* {.importc: "struct rte_cryptodev_ops", header: "rte_cryptodev_pmd.h".} = object
     dev_configure*: cryptodev_configure_t
     dev_start*: cryptodev_start_t
     dev_stop*: cryptodev_stop_t
@@ -333,7 +355,8 @@ type
     session_configure*: cryptodev_sym_configure_session_t
     session_clear*: cryptodev_sym_free_session_t
 
-  rte_cryptodev* = object
+
+  rte_cryptodev* {.importc: "struct rte_cryptodev", header: "rte_cryptodev.h".} = object
     dequeue_burst*: dequeue_pkt_burst_t
     enqueue_burst*: enqueue_pkt_burst_t
     driver*: ptr rte_cryptodev_driver
@@ -346,7 +369,7 @@ type
     link_intr_cbs*: rte_cryptodev_cb_list
     attached* {.bitsize: 1.}: uint8
 
-  rte_cryptodev_data* = object
+  rte_cryptodev_data* {.importc: "struct rte_cryptodev_data", header: "rte_cryptodev.h".} = object
     dev_id*: uint8
     socket_id*: uint8
     name*: array[(64), char]
@@ -365,15 +388,14 @@ proc rte_cryptodev_enqueue_burst*(dev_id: uint8; qp_id: uint16;
 
 
 
-
-
 type
+
   INNER_C_STRUCT_540751557* = object
     dev_id*: uint8
     `type`*: rte_cryptodev_type
     mp*: ptr rte_mempool
 
-  rte_cryptodev_session* = object
+  rte_cryptodev_session* {.importc: "struct rte_cryptodev_session", header: "rte_cryptodev_pmd.h".} = object
     ano_565536067*: INNER_C_STRUCT_540751557
     private*: array[0, char]
 

@@ -2,7 +2,7 @@ proc rte_eth_vhost_feature_disable*(feature_mask: uint64): cint {.importc, heade
 proc rte_eth_vhost_feature_enable*(feature_mask: uint64): cint {.importc, header: "rte_eth_vhost.h".}
 proc rte_eth_vhost_feature_get*(): uint64 {.importc, header: "rte_eth_vhost.h".}
 type
-  rte_eth_vhost_queue_event* = object
+  rte_eth_vhost_queue_event* {.importc: "struct rte_eth_vhost_queue_event", header: "rte_eth_vhost.h".} = object
     queue_id*: uint16
     rx*: bool
     enable*: bool

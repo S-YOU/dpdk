@@ -3,7 +3,7 @@ const
 
 type
   rte_job_update_period_cb_t* = proc (job: ptr rte_jobstats; job_result: int64) {.cdecl.}
-  rte_jobstats* = object
+  rte_jobstats* {.importc: "struct rte_jobstats", header: "rte_jobstats.h".} = object
     period*: uint64
     min_period*: uint64
     max_period*: uint64
@@ -16,7 +16,7 @@ type
     name*: array[32, char]
     context*: ptr rte_jobstats_context
 
-  rte_jobstats_context* = object
+  rte_jobstats_context* {.importc: "struct rte_jobstats_context", header: "rte_jobstats.h".}= object
     state_time*: uint64
     loop_executed_jobs*: uint64
     exec_time*: uint64

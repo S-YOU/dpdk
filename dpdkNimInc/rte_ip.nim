@@ -29,7 +29,7 @@ template IS_IPV4_MCAST*(x: untyped): untyped =
 
 
 type
-  ipv4_hdr* = object
+  ipv4_hdr* {.importc: "struct ipv4_hdr", header: "rte_ip_frag.h".} = object
     version_ihl*: uint8
     type_of_service*: uint8
     total_length*: uint16

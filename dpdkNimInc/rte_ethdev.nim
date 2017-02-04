@@ -170,7 +170,7 @@ const
   RTE_ETH_DEV_BONDED_SLAVE* = 0x00000004
 
 type
-  rte_eth_stats* = object
+  rte_eth_stats* {.importc: "struct rte_eth_stats", header: "rte_ethdev.h".} = object
     ipackets*: uint64
     opackets*: uint64
     ibytes*: uint64
@@ -185,13 +185,13 @@ type
     q_obytes*: array[RTE_ETHDEV_QUEUE_STAT_CNTRS, uint64]
     q_errors*: array[RTE_ETHDEV_QUEUE_STAT_CNTRS, uint64]
 
-  rte_eth_link* = object
+  rte_eth_link* {.importc: "struct rte_eth_link", header: "rte_ethdev.h".} = object
     link_speed*: uint32
     link_duplex* {.bitsize: 1.}: uint16
     link_autoneg* {.bitsize: 1.}: uint16
     link_status* {.bitsize: 1.}: uint16
 
-  rte_eth_thresh* = object
+  rte_eth_thresh* {.importc: "struct rte_eth_thresh", header: "rte_ethdev.h".} = object
     pthresh*: uint8
     hthresh*: uint8
     wthresh*: uint8
@@ -199,7 +199,7 @@ type
 
 
 type
-  rte_eth_rxmode* = object
+  rte_eth_rxmode* {.importc: "struct rte_eth_rxmode", header: "rte_ethdev.h".} = object
     mq_mode*: rte_eth_rx_mq_mode
     max_rx_pkt_len*: uint32
     split_hdr_size*: uint16
@@ -219,22 +219,22 @@ type
 
 
 type
-  rte_eth_rss_conf* = object
+  rte_eth_rss_conf* {.importc: "struct rte_eth_rss_conf", header: "rte_ethdev.h".} = object
     rss_key*: ptr uint8
     rss_key_len*: uint8
     rss_hf*: uint64
 
-  rte_eth_vlan_mirror* = object
+  rte_eth_vlan_mirror* {.importc: "struct rte_eth_vlan_mirror", header: "rte_ethdev.h".} = object
     vlan_mask*: uint64
     vlan_id*: array[64, uint16]
 
-  rte_eth_mirror_conf* = object
+  rte_eth_mirror_conf* {.importc: "struct rte_eth_mirror_conf", header: "rte_ethdev.h".} = object
     rule_type*: uint8
     dst_pool*: uint8
     pool_mask*: uint64
     vlan*: rte_eth_vlan_mirror
 
-  rte_eth_rss_reta_entry64* = object
+  rte_eth_rss_reta_entry64* {.importc: "struct rte_eth_rss_reta_entry64", header: "rte_ethdev.h".} = object
     mask*: uint64
     reta*: array[64, uint16]
 
@@ -248,26 +248,26 @@ type
 
 
 type
-  rte_eth_dcb_rx_conf* = object
+  rte_eth_dcb_rx_conf* {.importc: "struct rte_eth_dcb_rx_conf", header: "rte_ethdev.h".} = object
     nb_tcs*: rte_eth_nb_tcs
     dcb_tc*: array[8, uint8]
 
-  rte_eth_vmdq_dcb_tx_conf* = object
+  rte_eth_vmdq_dcb_tx_conf* {.importc: "struct rte_eth_vmdq_dcb_tx_conf", header: "rte_ethdev.h".} = object
     nb_queue_pools*: rte_eth_nb_pools
     dcb_tc*: array[8, uint8]
 
-  rte_eth_dcb_tx_conf* = object
+  rte_eth_dcb_tx_conf* {.importc: "struct rte_eth_dcb_tx_conf", header: "rte_ethdev.h".} = object
     nb_tcs*: rte_eth_nb_tcs
     dcb_tc*: array[8, uint8]
 
-  rte_eth_vmdq_tx_conf* = object
+  rte_eth_vmdq_tx_conf* {.importc: "struct rte_eth_vmdq_tx_conf", header: "rte_ethdev.h".} = object
     nb_queue_pools*: rte_eth_nb_pools
 
   INNER_C_STRUCT_3549726535* = object
     vlan_id*: uint16
     pools*: uint64
 
-  rte_eth_vmdq_dcb_conf* = object
+  rte_eth_vmdq_dcb_conf* {.importc: "struct rte_eth_vmdq_dcb_conf", header: "rte_ethdev.h".} = object
     nb_queue_pools*: rte_eth_nb_pools
     enable_default_pool*: uint8
     default_pool*: uint8
@@ -279,7 +279,7 @@ type
     vlan_id*: uint16
     pools*: uint64
 
-  rte_eth_vmdq_rx_conf* = object
+  rte_eth_vmdq_rx_conf* {.importc: "struct rte_eth_vmdq_rx_conf", header: "rte_ethdev.h".} = object
     nb_queue_pools*: rte_eth_nb_pools
     enable_default_pool*: uint8
     default_pool*: uint8
@@ -288,27 +288,27 @@ type
     rx_mode*: uint32
     pool_map*: array[64, INNER_C_STRUCT_2736085125]
 
-  rte_eth_txmode* = object
+  rte_eth_txmode* {.importc: "struct rte_eth_txmode", header: "rte_ethdev.h".} = object
     mq_mode*: rte_eth_tx_mq_mode
     pvid*: uint16
     hw_vlan_reject_tagged* {.bitsize: 1.}: uint8
     hw_vlan_reject_untagged* {.bitsize: 1.}: uint8
     hw_vlan_insert_pvid* {.bitsize: 1.}: uint8
 
-  rte_eth_rxconf* = object
+  rte_eth_rxconf* {.importc: "struct rte_eth_rxconf", header: "rte_ethdev.h".} = object
     rx_thresh*: rte_eth_thresh
     rx_free_thresh*: uint16
     rx_drop_en*: uint8
     rx_deferred_start*: uint8
 
-  rte_eth_txconf* = object
+  rte_eth_txconf* {.importc: "struct rte_eth_txconf", header: "rte_ethdev.h".} = object
     tx_thresh*: rte_eth_thresh
     tx_rs_thresh*: uint16
     tx_free_thresh*: uint16
     txq_flags*: uint32
     tx_deferred_start*: uint8
 
-  rte_eth_desc_lim* = object
+  rte_eth_desc_lim* {.importc: "struct rte_eth_desc_lim", header: "rte_ethdev.h".} = object
     nb_max*: uint16
     nb_min*: uint16
     nb_align*: uint16
@@ -318,7 +318,7 @@ type
 
 
 type
-  rte_eth_fc_conf* = object
+  rte_eth_fc_conf* {.importc: "struct rte_eth_fc_conf", header: "rte_ethdev.h".} = object
     high_water*: uint32
     low_water*: uint32
     pause_time*: uint16
@@ -327,7 +327,7 @@ type
     mac_ctrl_frame_fwd*: uint8
     autoneg*: uint8
 
-  rte_eth_pfc_conf* = object
+  rte_eth_pfc_conf* {.importc: "struct rte_eth_pfc_conf", header: "rte_ethdev.h".} = object
     fc*: rte_eth_fc_conf
     priority*: uint8
 
@@ -342,7 +342,7 @@ type
 
 
 type
-  rte_fdir_conf* = object
+  rte_fdir_conf* {.importc: "struct rte_fdir_conf", header: "rte_ethdev.h".} = object
     mode*: rte_fdir_mode
     pballoc*: rte_fdir_pballoc_type
     status*: rte_fdir_status_mode
@@ -350,11 +350,11 @@ type
     mask*: rte_eth_fdir_masks
     flex_conf*: rte_eth_fdir_flex_conf
 
-  rte_eth_udp_tunnel* = object
+  rte_eth_udp_tunnel* {.importc: "struct rte_eth_udp_tunnel", header: "rte_ethdev.h".} = object
     udp_port*: uint16
     prot_type*: uint8
 
-  rte_intr_conf* = object
+  rte_intr_conf* {.importc: "struct rte_intr_conf", header: "rte_ethdev.h".} = object
     lsc*: uint16
     rxq*: uint16
 
@@ -369,7 +369,7 @@ type
     dcb_tx_conf*: rte_eth_dcb_tx_conf
     vmdq_tx_conf*: rte_eth_vmdq_tx_conf
 
-  rte_eth_conf* = object
+  rte_eth_conf* {.importc: "struct rte_eth_conf", header: "rte_ethdev.h".} = object
     link_speeds*: uint32
     rxmode*: rte_eth_rxmode
     txmode*: rte_eth_txmode
@@ -380,7 +380,7 @@ type
     fdir_conf*: rte_fdir_conf
     intr_conf*: rte_intr_conf
 
-  rte_eth_dev_info* = object
+  rte_eth_dev_info* {.importc: "struct rte_eth_dev_info", header: "rte_ethdev.h".} = object
     pci_dev*: ptr rte_pci_device
     driver_name*: cstring
     if_index*: cuint
@@ -408,21 +408,21 @@ type
     nb_rx_queues*: uint16
     nb_tx_queues*: uint16
 
-  rte_eth_rxq_info* = object
+  rte_eth_rxq_info* {.importc: "struct rte_eth_rxq_info", header: "rte_ethdev.h".} = object
     mp*: ptr rte_mempool
     conf*: rte_eth_rxconf
     scattered_rx*: uint8
     nb_desc*: uint16
 
-  rte_eth_txq_info* = object
+  rte_eth_txq_info* {.importc: "struct rte_eth_txq_info", header: "rte_ethdev.h".} = object
     conf*: rte_eth_txconf
     nb_desc*: uint16
 
-  rte_eth_xstat* = object
+  rte_eth_xstat* {.importc: "struct rte_eth_xstat", header: "rte_ethdev.h".} = object
     id*: uint64
     value*: uint64
 
-  rte_eth_xstat_name* = object
+  rte_eth_xstat_name* {.importc: "struct rte_eth_xstat_name", header: "rte_ethdev.h".} = object
     name*: array[64, char]
 
   INNER_C_STRUCT_3614176241* = object
@@ -433,11 +433,11 @@ type
     base*: uint8
     nb_queue*: uint8
 
-  rte_eth_dcb_tc_queue_mapping* = object
+  rte_eth_dcb_tc_queue_mapping* {.importc: "struct rte_eth_dcb_tc_queue_mapping", header: "rte_ethdev.h".} = object
     tc_rxq*: array[64, array[8, INNER_C_STRUCT_3614176241]]
     tc_txq*: array[64, array[8, INNER_C_STRUCT_50227114]]
 
-  rte_eth_dcb_info* = object
+  rte_eth_dcb_info* {.importc: "struct rte_eth_dcb_info", header: "rte_ethdev.h".} = object
     nb_tcs*: uint8
     prio_tc*: array[8, uint8]
     tc_bws*: array[8, uint8]
@@ -555,7 +555,7 @@ type
   eth_filter_ctrl_t* = proc (dev: ptr rte_eth_dev; filter_type: rte_filter_type;
                           filter_op: rte_filter_op; arg: pointer): cint {.cdecl.}
   eth_get_dcb_info* = proc (dev: ptr rte_eth_dev; dcb_info: ptr rte_eth_dcb_info): cint {.cdecl.}
-  eth_dev_ops* = object
+  eth_dev_ops* {.importc: "struct eth_dev_ops", header: "rte_ethdev.h".} = object
     dev_configure*: eth_dev_configure_t
     dev_start*: eth_dev_start_t
     dev_stop*: eth_dev_stop_t
@@ -645,7 +645,7 @@ type
     rx*: rte_rx_callback_fn
     tx*: rte_tx_callback_fn
 
-  rte_eth_rxtx_callback* = object
+  rte_eth_rxtx_callback* {.importc: "struct rte_eth_rxtx_callback", header: "rte_ethdev.h".} = object
     next*: ptr rte_eth_rxtx_callback
     fn*: INNER_C_UNION_3380959430
     param*: pointer
@@ -654,7 +654,7 @@ type
     RTE_ETH_DEV_UNKNOWN, RTE_ETH_DEV_PCI, RTE_ETH_DEV_VIRTUAL, RTE_ETH_DEV_MAX
 
 
-  rte_eth_dev* = object
+  rte_eth_dev* {.importc: "struct rte_eth_dev", header: "rte_ethdev.h".} = object
     rx_pkt_burst*: eth_rx_burst_t
     tx_pkt_burst*: eth_tx_burst_t
     data*: ptr rte_eth_dev_data
@@ -667,13 +667,13 @@ type
     attached*: uint8
     dev_type*: rte_eth_dev_type
 
-  rte_eth_dev_sriov* = object
+  rte_eth_dev_sriov* {.importc: "struct rte_eth_dev_sriov", header: "rte_ethdev.h".} = object
     active*: uint8
     nb_q_per_pool*: uint8
     def_vmdq_idx*: uint16
     def_pool_q_idx*: uint16
 
-  rte_eth_dev_data* = object
+  rte_eth_dev_data* {.importc: "struct rte_eth_dev_data", header: "rte_ethdev.h".} = object
     name*: array[(32), char]
     rx_queues*: ptr pointer
     tx_queues*: ptr pointer

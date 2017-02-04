@@ -8,7 +8,7 @@ type
     tqe_next*: ptr rte_devargs
     tqe_prev*: ptr ptr rte_devargs
 
-  rte_pci_addr* = object
+  rte_pci_addr* {.importc: "struct rte_pci_addr", header: "rte_pci.h".} = object
     domain*: uint16
     bus*: uint8
     devid*: uint8
@@ -24,13 +24,13 @@ type
     pci*: INNER_C_STRUCT_2074183052
     virt*: INNER_C_STRUCT_2098967565
 
-  rte_devargs* = object
+  rte_devargs* {.importc: "struct rte_devargs", header: "rte_pci.h".} = object
     next*: INNER_C_STRUCT_2839750623
     `type`*: rte_devtype
     ano_2115490571*: INNER_C_UNION_2065921546
     args*: cstring
 
-  rte_devargs_list* = object
+  rte_devargs_list* {.importc: "struct rte_devargs_list", header: "rte_pci.h".} = object
     tqh_first*: ptr rte_devargs
     tqh_last*: ptr ptr rte_devargs
 

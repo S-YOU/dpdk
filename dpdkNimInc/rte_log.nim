@@ -1,5 +1,5 @@
 type
-  rte_logs* = object
+  rte_logs* {.importc: "struct rte_logs", header: "rte_log.h".} = object
     `type`*: uint32
     level*: uint32
     file*: ptr FILE

@@ -22,7 +22,7 @@ type
   INNER_C_STRUCT_1320030258* = object
     lh_first*: ptr malloc_elem
 
-  malloc_heap* = object
+  malloc_heap* {.importc: "struct malloc_heap", header: "rte_malloc_heap.h".} = object
     lock*: rte_spinlock_t
     free_head*: array[13, INNER_C_STRUCT_1320030258]
     alloc_count*: cuint

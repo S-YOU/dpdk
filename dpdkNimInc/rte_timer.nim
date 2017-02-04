@@ -16,12 +16,12 @@ type
     state*: uint16
     owner*: int16
 
-  rte_timer_status* = object {.union.}
+  rte_timer_status* {.importc: "struct rte_timer_status", header: "rte_timer.h", union.} = object 
     ano_651049294*: INNER_C_STRUCT_1761507430
     u32*: uint32
 
   rte_timer_cb_t* = proc (a2: ptr rte_timer; a3: pointer) {.cdecl.}
-  rte_timer* = object
+  rte_timer* {.importc: "struct rte_timer", header: "rte_timer.h".} = object
     expire*: uint64
     sl_next*: array[10, ptr rte_timer]
     status*: rte_timer_status

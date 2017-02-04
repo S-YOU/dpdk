@@ -6,7 +6,7 @@ const
 
 type
   rte_fbk_hash_fn* = proc (key: uint32; init_val: uint32): uint32 {.cdecl.}
-  rte_fbk_hash_params* = object
+  rte_fbk_hash_params* {.importc: "struct rte_fbk_hash_params", header: "rte_fbk_hash.h".} = object
     name*: cstring
     entries*: uint32
     entries_per_bucket*: uint32
@@ -19,11 +19,11 @@ type
     value*: uint16
     key*: uint32
 
-  rte_fbk_hash_entry* = object {.union.}
+  rte_fbk_hash_entry* {.importc: "struct rte_fbk_hash_entry", header: "rte_fbk_hash.h".} = object {.union.}
     whole_entry*: uint64
     entry*: INNER_C_STRUCT_1465896896
 
-  rte_fbk_hash_table* = object
+  rte_fbk_hash_table* {.importc: "struct rte_fbk_hash_table", header: "rte_fbk_hash.h".} = object
     name*: array[32, char]
     entries*: uint32
     entries_per_bucket*: uint32

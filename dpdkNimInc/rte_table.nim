@@ -1,5 +1,5 @@
 type
-  rte_table_stats* = object
+  rte_table_stats* {.importc: "struct rte_table_stats", header: "rte_table.h".} = object
     n_pkts_in*: uint64
     n_pkts_lookup_miss*: uint64
 

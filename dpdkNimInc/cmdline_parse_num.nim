@@ -4,10 +4,10 @@ type
 
 
 type
-  cmdline_token_num_data* = object
+  cmdline_token_num_data* {.importc: "struct cmdline_token_num_data", header: "cmdline_parse_num.h".} = object
     `type`*: cmdline_numtype
 
-  cmdline_token_num* = object
+  cmdline_token_num* {.importc: "struct cmdline_token_num", header: "cmdline_parse_num.h".} = object
     hdr*: cmdline_token_hdr
     num_data*: cmdline_token_num_data
 

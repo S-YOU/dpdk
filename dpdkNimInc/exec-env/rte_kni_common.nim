@@ -12,19 +12,19 @@ type
     new_mtu*: uint32
     if_up*: uint8
 
-  rte_kni_request* = object
+  rte_kni_request* {.importc: "struct rte_kni_request", header: "rte_kni_common.h".} = object
     req_id*: uint32
     ano_2483195275*: INNER_C_UNION_2635871081
     result*: int32
 
-  rte_kni_fifo* = object
+  rte_kni_fifo* {.importc: "struct rte_kni_fifo", header: "rte_kni_common.h".} = object
     write*: cuint
     read*: cuint
     len*: cuint
     elem_size*: cuint
     buffer*: array[0, pointer]
 
-  rte_kni_mbuf* = object
+  rte_kni_mbuf* {.importc: "struct rte_kni_mbuf", header: "rte_kni_common.h".} = object
     buf_addr*: pointer
     pad0*: array[10, char]
     data_off*: uint16
@@ -39,7 +39,7 @@ type
     pool*: pointer
     next*: pointer
 
-  rte_kni_device_info* = object
+  rte_kni_device_info* {.importc: "struct rte_kni_device_info", header: "rte_kni_common.h".} = object
     name*: array[32, char]
     tx_phys*: phys_addr_t
     rx_phys*: phys_addr_t

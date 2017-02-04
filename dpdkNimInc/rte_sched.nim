@@ -131,32 +131,32 @@ type
     memory*: array[0, uint8]
 
 # orig rte_sched.nim
-  rte_sched_subport_params* = object
+  rte_sched_subport_params* {.importc: "struct rte_sched_subport_params", header: "rte_sched.h".} = object
     tb_rate*: uint32
     tb_size*: uint32
     tc_rate*: array[4, uint32]
     tc_period*: uint32
 
-  rte_sched_subport_stats* = object
+  rte_sched_subport_stats* {.importc: "struct rte_sched_subport_stats", header: "rte_sched.h".} = object
     n_pkts_tc*: array[4, uint32]
     n_pkts_tc_dropped*: array[4, uint32]
     n_bytes_tc*: array[4, uint32]
     n_bytes_tc_dropped*: array[4, uint32]
 
-  rte_sched_pipe_params* = object
+  rte_sched_pipe_params* {.importc: "struct rte_sched_pipe_params", header: "rte_sched.h".} = object
     tb_rate*: uint32
     tb_size*: uint32
     tc_rate*: array[4, uint32]
     tc_period*: uint32
     wrr_weights*: array[(4 * 4), uint8]
 
-  rte_sched_queue_stats* = object
+  rte_sched_queue_stats* {.importc: "struct rte_sched_queue_stats", header: "rte_sched.h".} = object
     n_pkts*: uint32
     n_pkts_dropped*: uint32
     n_bytes*: uint32
     n_bytes_dropped*: uint32
 
-  rte_sched_port_params* = object
+  rte_sched_port_params* {.importc: "struct rte_sched_port_params", header: "rte_sched.h".} = object
     name*: cstring
     socket*: cint
     rate*: uint32

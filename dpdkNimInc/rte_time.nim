@@ -2,7 +2,7 @@ const
   NSEC_PER_SEC* = 1000000000
 
 type
-  rte_timecounter* = object
+  rte_timecounter* {.importc: "struct rte_timecounter", header: "rte_time.h".} = object
     cycle_last*: uint64
     nsec*: uint64
     nsec_mask*: uint64

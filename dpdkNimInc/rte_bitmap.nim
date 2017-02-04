@@ -14,7 +14,7 @@ const
 
 
 type
-  rte_bitmap* = object
+  rte_bitmap* {.importc: "struct rte_bitmap", header: "rte_bitmap.h".} = object
     array1*: ptr uint64
     array2*: ptr uint64
     array1_size*: uint32

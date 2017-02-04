@@ -28,7 +28,7 @@ type
     head*: uint32
     tail*: uint32
 
-  rte_ring* = object
+  rte_ring* {.importc: "struct rte_ring", header: "rte_ring.h".} = object
     name*: array[32, char]
     flags*: cint
     memzone*: ptr rte_memzone

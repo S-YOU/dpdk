@@ -10,7 +10,7 @@ type
   hash_sig_t* = uint32
   rte_hash_function* = proc (key: pointer; key_len: uint32; init_val: uint32): uint32 {.cdecl.}
   rte_hash_cmp_eq_t* = proc (key1: pointer; key2: pointer; key_len: csize): cint {.cdecl.}
-  rte_hash_parameters* = object
+  rte_hash_parameters* {.importc: "struct rte_hash_parameters", header: "rte_hash.h".} = object
     name*: cstring
     entries*: uint32
     reserved*: uint32

@@ -12,7 +12,7 @@ const
   ETHER_MIN_MTU* = 68
 
 type
-  ether_addr* = object
+  ether_addr* {.importc: "struct ether_addr", header: "rte_ether.h".} = object
     addr_bytes*: array[6, uint8]
 
 const
@@ -21,16 +21,16 @@ const
   ETHER_ADDR_FMT_SIZE* = 18
 
 type
-  ether_hdr* = object
+  ether_hdr* {.importc: "struct ether_hdr", header: "rte_ether.h".} = object
     d_addr*: ether_addr
     s_addr*: ether_addr
     ether_type*: uint16
 
-  vlan_hdr* = object
+  vlan_hdr* {.importc: "struct vlan_hdr", header: "rte_ether.h".} = object
     vlan_tci*: uint16
     eth_proto*: uint16
 
-  vxlan_hdr* = object
+  vxlan_hdr* {.importc: "struct vxlan_hdr", header: "rte_ether.h".} = object
     vx_flags*: uint32
     vx_vni*: uint32
 

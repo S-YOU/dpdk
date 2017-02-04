@@ -8,7 +8,7 @@ const
   VIRTIO_QNUM* = 2
 
 type
-  virtio_net_device_ops* = object
+  virtio_net_device_ops* {.importc: "struct virtio_net_device_ops", header: "rte_virtio_net.h".} = object
     new_device*: proc (vid: cint): cint {.cdecl.}
     destroy_device*: proc (vid: cint) {.cdecl.}
     vring_state_changed*: proc (vid: cint; queue_id: uint16; enable: cint): cint {.cdecl.}

@@ -19,7 +19,7 @@ proc rte_atomic16_test_and_set*(v: ptr rte_atomic16_t): cint {.inline, importc, 
 proc rte_atomic16_clear*(v: ptr rte_atomic16_t) {.inline, importc, header: "rte_atomic.h".}
 proc rte_atomic32_cmpset*(dst: ptr uint32; exp: uint32; src: uint32): cint {.inline, importc, header: "rte_atomic.h".}
 type
-  rte_atomic32_t* = object
+  rte_atomic32_t* {.importc: "struct rte_atomic32_t", header: "rte_atomic.h".} = object
     cnt*: int32
 
 
@@ -38,7 +38,7 @@ proc rte_atomic32_test_and_set*(v: ptr rte_atomic32_t): cint {.inline, importc, 
 proc rte_atomic32_clear*(v: ptr rte_atomic32_t) {.inline, importc, header: "rte_atomic.h".}
 proc rte_atomic64_cmpset*(dst: ptr uint64; exp: uint64; src: uint64): cint {.inline, importc, header: "rte_atomic.h".}
 type
-  rte_atomic64_t* = object
+  rte_atomic64_t* {.importc: "struct rte_atomic64_t", header: "rte_atomic.h".} = object
     cnt*: int64
 
 

@@ -137,7 +137,7 @@ type
     tx_offload*: uint64
     ano_1595394530*: INNER_C_STRUCT_2800259597
 
-  rte_mbuf* = object
+  rte_mbuf* {.importc: "struct rte_mbuf", header: "rte_mbuf.h".} = object
     cacheline0*: MARKER
     buf_addr*: pointer
     buf_physaddr*: phys_addr_t

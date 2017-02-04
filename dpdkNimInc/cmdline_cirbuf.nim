@@ -1,5 +1,5 @@
 type
-  cirbuf* = object
+  cirbuf* = object {.importc: "struct cirbuf", header: "cmdline_cirbuf.h".}
     maxlen*: cuint
     start*: cuint
     `end`*: cuint

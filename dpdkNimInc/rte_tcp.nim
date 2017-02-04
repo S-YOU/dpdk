@@ -1,5 +1,5 @@
 type
-  tcp_hdr* = object
+  tcp_hdr* {.importc: "struct tcp_hdr", header: "rte_tcp.h".} = object
     src_port*: uint16
     dst_port*: uint16
     sent_seq*: uint32

@@ -5,7 +5,7 @@ const
 type
   rte_cfgfile* = object
   
-  rte_cfgfile_entry* = object
+  rte_cfgfile_entry* {.importc: "struct rte_cfgfile_entry", header: "rte_cfgfile.h".} = object
     name*: array[64, char]
     value*: array[256, char]
 

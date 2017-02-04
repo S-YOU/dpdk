@@ -16,36 +16,36 @@ type
     next_hop*: uint8
     group_idx*: uint8
 
-  rte_lpm_tbl_entry_v20* = object
+  rte_lpm_tbl_entry_v20* {.importc: "struct rte_lpm_tbl_entry_v20", header: "rte_lpm.h".} = object
     ano_18054446*: INNER_C_UNION_1531442
     valid* {.bitsize: 1.}: uint8
     valid_group* {.bitsize: 1.}: uint8
     depth* {.bitsize: 6.}: uint8
 
-  rte_lpm_tbl_entry* = object
+  rte_lpm_tbl_entry* {.importc: "struct rte_lpm_tbl_entry", header: "rte_lpm.h".} = object
     next_hop* {.bitsize: 24.}: uint32
     valid* {.bitsize: 1.}: uint32
     valid_group* {.bitsize: 1.}: uint32
     depth* {.bitsize: 6.}: uint32
 
-  rte_lpm_config* = object
+  rte_lpm_config* {.importc: "struct rte_lpm_config", header: "rte_lpm.h".} = object
     max_rules*: uint32
     number_tbl8s*: uint32
     flags*: cint
 
-  rte_lpm_rule_v20* = object
+  rte_lpm_rule_v20* {.importc: "struct rte_lpm_rule_v20", header: "rte_lpm.h".} = object
     ip*: uint32
     next_hop*: uint8
 
-  rte_lpm_rule* = object
+  rte_lpm_rule* {.importc: "struct rte_lpm_rule", header: "rte_lpm.h".} = object
     ip*: uint32
     next_hop*: uint32
 
-  rte_lpm_rule_info* = object
+  rte_lpm_rule_info* {.importc: "struct rte_lpm_rule_info", header: "rte_lpm.h".} = object
     used_rules*: uint32
     first_rule*: uint32
 
-  rte_lpm_v20* = object
+  rte_lpm_v20* {.importc: "struct rte_lpm_v20", header: "rte_lpm.h".} = object
     name*: array[32, char]
     max_rules*: uint32
     rule_info*: array[32, rte_lpm_rule_info]
@@ -53,7 +53,7 @@ type
     tbl8*: array[(256 * 256), rte_lpm_tbl_entry_v20]
     rules_tbl*: array[0, rte_lpm_rule_v20]
 
-  rte_lpm* = object
+  rte_lpm* {.importc: "struct rte_lpm", header: "rte_lpm.h".} = object
     name*: array[32, char]
     max_rules*: uint32
     number_tbl8s*: uint32

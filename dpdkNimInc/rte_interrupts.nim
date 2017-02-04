@@ -7,13 +7,13 @@ type
     RTE_INTR_HANDLE_MAX
 
   rte_intr_event_cb_t* = proc (fd: cint; arg: pointer) {.cdecl.}
-  rte_epoll_data* = object
+  rte_epoll_data* {.importc: "struct rte_epoll_data", header: "rte_interrupts.h".} = object
     event*: uint32
     data*: pointer
     cb_fun*: rte_intr_event_cb_t
     cb_arg*: pointer
 
-  rte_epoll_event* = object
+  rte_epoll_event* {.importc: "struct rte_epoll_event", header: "rte_interrupts.h".} = object
     status*: uint32
     fd*: cint
     epfd*: cint
@@ -23,7 +23,7 @@ type
     vfio_dev_fd*: cint
     uio_cfg_fd*: cint
 
-  rte_intr_handle* = object
+  rte_intr_handle* {.importc: "struct rte_intr_handle", header: "rte_interrupts.h".} = object
     ano_2703603810*: INNER_C_UNION_2687080802
     fd*: cint
     `type`*: rte_intr_handle_type

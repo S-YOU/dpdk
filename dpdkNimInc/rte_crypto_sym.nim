@@ -20,7 +20,7 @@ type
     data*: ptr uint8
     length*: csize
 
-  rte_crypto_cipher_xform* = object
+  rte_crypto_cipher_xform* {.importc: "struct rte_crypto_cipher_xform", header: "rte_crypto_sym.h".} = object
     op*: rte_crypto_cipher_operation
     algo*: rte_crypto_cipher_algorithm
     key*: INNER_C_STRUCT_247578448
@@ -47,7 +47,7 @@ type
     data*: ptr uint8
     length*: csize
 
-  rte_crypto_auth_xform* = object
+  rte_crypto_auth_xform* {.importc: "struct rte_crypto_auth_xform", header: "rte_crypto_sym.h".} = object
     op*: rte_crypto_auth_operation
     algo*: rte_crypto_auth_algorithm
     key*: INNER_C_STRUCT_3345142729
@@ -64,7 +64,7 @@ type
     auth*: rte_crypto_auth_xform
     cipher*: rte_crypto_cipher_xform
 
-  rte_crypto_sym_xform* = object
+  rte_crypto_sym_xform* {.importc: "struct rte_crypto_sym_xform", header: "rte_crypto_sym.h".} = object
     next*: ptr rte_crypto_sym_xform
     `type`*: rte_crypto_sym_xform_type
     ano_594826815*: INNER_C_UNION_578303810
@@ -110,7 +110,7 @@ type
     digest*: INNER_C_STRUCT_2277688667
     aad*: INNER_C_STRUCT_1885657366
 
-  rte_crypto_sym_op* = object
+  rte_crypto_sym_op* {.importc: "struct rte_crypto_sym_op", header: "rte_crypto_sym.h".} = object
     m_src*: ptr rte_mbuf
     m_dst*: ptr rte_mbuf
     sess_type*: rte_crypto_sym_op_sess_type

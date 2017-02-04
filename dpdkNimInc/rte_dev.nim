@@ -13,7 +13,7 @@ type
     tqe_next*: ptr rte_driver
     tqe_prev*: ptr ptr rte_driver
 
-  rte_driver* = object
+  rte_driver* {.importc: "struct rte_driver", header: "rte_dev.h".} = object
     next*: INNER_C_STRUCT_647670934
     `type`*: pmd_type
     name*: cstring

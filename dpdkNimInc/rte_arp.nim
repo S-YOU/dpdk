@@ -8,13 +8,13 @@ const
   ARP_OP_INVREPLY* = 9
 
 type
-  arp_ipv4* = object
+  arp_ipv4* {.importc: "struct arp_ipv4", header: "rte_arp.h".} = object
     arp_sha*: ether_addr
     arp_sip*: uint32
     arp_tha*: ether_addr
     arp_tip*: uint32
 
-  arp_hdr* = object
+  arp_hdr* {.importc: "struct arp_hdr", header: "rte_arp.h".} = object
     arp_hrd*: uint16
     arp_pro*: uint16
     arp_hln*: uint8

@@ -1,5 +1,5 @@
 type
-  rte_mem_config* = object
+  rte_mem_config* {.importc: "struct rte_mem_config", header: "rte_dev_info.h".} = object
     magic*: uint32
     nchannel*: uint32
     nrank*: uint32

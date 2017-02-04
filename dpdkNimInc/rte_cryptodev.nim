@@ -61,21 +61,21 @@ type
     auth*: INNER_C_STRUCT_3672357354
     cipher*: INNER_C_STRUCT_930302951
 
-  rte_cryptodev_symmetric_capability* = object
+  rte_cryptodev_symmetric_capability* {.importc: "struct rte_cryptodev_symmetric_capability", header: "rte_cryptodev.h".} = object
     xform_type*: rte_crypto_sym_xform_type
     ano_1735674661*: INNER_C_UNION_3664095850
 
   INNER_C_UNION_2474954340* = object {.union.}
     sym*: rte_cryptodev_symmetric_capability
 
-  rte_cryptodev_capabilities* = object
+  rte_cryptodev_capabilities* {.importc: "struct rte_cryptodev_capabilities", header: "rte_cryptodev.h".} = object
     op*: rte_crypto_op_type
     ano_2483215840*: INNER_C_UNION_2474954340
 
   INNER_C_STRUCT_2390685907* = object
     max_nb_sessions*: cuint
 
-  rte_cryptodev_info* = object
+  rte_cryptodev_info* {.importc: "struct rte_cryptodev_info", header: "rte_cryptodev.h".} = object
     driver_name*: cstring
     dev_type*: rte_cryptodev_type
     pci_dev*: ptr rte_pci_device
@@ -90,18 +90,18 @@ type
 
 
 type
-  rte_cryptodev_qp_conf* = object
+  rte_cryptodev_qp_conf* {.importc: "struct rte_cryptodev_qp_conf", header: "rte_cryptodev.h".} = object
     nb_descriptors*: uint32
 
   rte_cryptodev_cb_fn* = proc (dev_id: uint8; event: rte_cryptodev_event_type;
                             cb_arg: pointer) {.cdecl.}
-  rte_cryptodev_stats* = object
+  rte_cryptodev_stats* {.importc: "struct rte_cryptodev_stats", header: "rte_cryptodev.h".} = object
     enqueued_count*: uint64
     dequeued_count*: uint64
     enqueue_err_count*: uint64
     dequeue_err_count*: uint64
 
-  rte_crypto_vdev_init_params* = object
+  rte_crypto_vdev_init_params* {.importc: "struct rte_crypto_vdev_init_params", header: "rte_cryptodev.h".} = object
     max_nb_queue_pairs*: cuint
     max_nb_sessions*: cuint
     socket_id*: uint8
@@ -114,7 +114,7 @@ type
     nb_objs*: uint32
     cache_size*: uint32
 
-  rte_cryptodev_config* = object
+  rte_cryptodev_config* {.importc: "struct rte_cryptodev_config", header: "rte_cryptodev.h".} = object
     socket_id*: cint
     nb_queue_pairs*: uint16
     session_mp*: INNER_C_STRUCT_3075585876
@@ -127,7 +127,7 @@ type
     tqh_first*: ptr rte_cryptodev_callback
     tqh_last*: ptr ptr rte_cryptodev_callback
 
-  rte_cryptodev* = object
+  rte_cryptodev* {.importc: "struct rte_cryptodev", header: "rte_cryptodev.h".} = object
     dequeue_burst*: dequeue_pkt_burst_t
     enqueue_burst*: enqueue_pkt_burst_t
     driver*: ptr rte_cryptodev_driver
@@ -140,7 +140,7 @@ type
     link_intr_cbs*: rte_cryptodev_cb_list
     attached* {.bitsize: 1.}: uint8
 
-  rte_cryptodev_data* = object
+  rte_cryptodev_data* {.importc: "struct rte_cryptodev_data", header: "rte_cryptodev.h".} = object
     dev_id*: uint8
     socket_id*: uint8
     name*: array[(64), char]
@@ -163,7 +163,7 @@ type
     dev_type*: rte_cryptodev_type
     mp*: ptr rte_mempool
 
-  rte_cryptodev_sym_session* = object
+  rte_cryptodev_sym_session* {.importc: "struct rte_cryptodev_sym_session", header: "rte_cryptodev.h".} = object
     ano_3010412218*: INNER_C_STRUCT_2985627708
     private*: array[0, char]
 

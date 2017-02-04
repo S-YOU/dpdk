@@ -6,7 +6,7 @@ const
 type
   rte_lpm6* = object
   
-  rte_lpm6_config* = object
+  rte_lpm6_config* {.importc: "struct rte_lpm6_config", header: "rte_lpm6.h".} = object
     max_rules*: uint32
     number_tbl8s*: uint32
     flags*: cint

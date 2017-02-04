@@ -3,16 +3,17 @@ type
     ipv4*: in_addr
     ipv6*: in6_addr
 
-  cmdline_ipaddr* = object
+  cmdline_ipaddr* {.importc: "struct cmdline_ipaddr", header: "cmdline_parse_ipaddr.h".} = object
     family*: uint8
     `addr`*: INNER_C_UNION_3476110636
     prefixlen*: cuint
 
-  cmdline_ipaddr_t* = cmdline_ipaddr
-  cmdline_token_ipaddr_data* = object
+  cmdline_ipaddr_t*  = cmdline_ipaddr
+
+  cmdline_token_ipaddr_data* {.importc: "struct cmdline_token_ipaddr_data", header: "cmdline_parse_ipaddr.h".} = object
     flags*: uint8
 
-  cmdline_token_ipaddr* = object
+  cmdline_token_ipaddr* {.importc: "struct cmdline_token_ipaddr", header: "cmdline_parse_ipaddr.h".} = object
     hdr*: cmdline_token_hdr
     ipaddr_data*: cmdline_token_ipaddr_data
 

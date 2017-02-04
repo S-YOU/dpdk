@@ -1,5 +1,5 @@
 type
-  cmdline_token_etheraddr* = object
+  cmdline_token_etheraddr* {.importc: "struct cmdline_token_etheraddr", header: "cmdline_parse_etheraddr.h".} = object
     hdr*: cmdline_token_hdr
 
   cmdline_parse_token_etheraddr_t* = cmdline_token_etheraddr

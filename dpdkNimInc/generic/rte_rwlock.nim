@@ -1,5 +1,5 @@
 type
-  rte_rwlock_t* = object
+  rte_rwlock_t* {.importc: "struct rte_rwlock_t", header: "rte_rwlock.h".} = object
     cnt*: int32
 
 

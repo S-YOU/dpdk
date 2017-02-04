@@ -6,15 +6,15 @@ type
     tqe_next*: ptr rte_tailq_entry
     tqe_prev*: ptr ptr rte_tailq_entry
 
-  rte_tailq_entry* = object
+  rte_tailq_entry* {.importc: "struct rte_tailq_entry", header: "rte_tailq.h".} = object
     next*: INNER_C_STRUCT_541577717
     data*: pointer
 
-  rte_tailq_entry_head* = object
+  rte_tailq_entry_head* {.importc: "struct rte_tailq_entry_head", header: "rte_tailq.h".} = object
     tqh_first*: ptr rte_tailq_entry
     tqh_last*: ptr ptr rte_tailq_entry
 
-  rte_tailq_head* = object
+  rte_tailq_head* {.importc: "struct rte_tailq_head", header: "rte_tailq.h".} = object
     tailq_head*: rte_tailq_entry_head
     name*: array[32, char]
 
@@ -22,7 +22,7 @@ type
     tqe_next*: ptr rte_tailq_elem
     tqe_prev*: ptr ptr rte_tailq_elem
 
-  rte_tailq_elem* = object
+  rte_tailq_elem* {.importc: "struct rte_tailq_elem", header: "rte_tailq.h".} = object
     head*: ptr rte_tailq_head
     next*: INNER_C_STRUCT_1755603680
     name*: array[32, char]

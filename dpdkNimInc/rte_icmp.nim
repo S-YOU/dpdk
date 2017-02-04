@@ -3,7 +3,7 @@ const
   IP_ICMP_ECHO_REQUEST* = 8
 
 type
-  icmp_hdr* = object
+  icmp_hdr* {.importc: "struct icmp_hdr", header: "rte_fbk_hash.h".} = object
     icmp_type*: uint8
     icmp_code*: uint8
     icmp_cksum*: uint16

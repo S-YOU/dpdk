@@ -3,7 +3,6 @@ type
     RTE_CRYPTO_OP_TYPE_UNDEFINED, RTE_CRYPTO_OP_TYPE_SYMMETRIC
 
 
-type
   rte_crypto_op_status* = enum
     RTE_CRYPTO_OP_STATUS_SUCCESS, RTE_CRYPTO_OP_STATUS_NOT_PROCESSED,
     RTE_CRYPTO_OP_STATUS_ENQUEUED, RTE_CRYPTO_OP_STATUS_AUTH_FAILED,
@@ -11,11 +10,14 @@ type
     RTE_CRYPTO_OP_STATUS_ERROR
 
 
-type
+  rte_crypto_sym_op_sess_type* = enum
+    RTE_CRYPTO_SYM_OP_WITH_SESSION, RTE_CRYPTO_SYM_OP_SESSIONLESS
+
+
   INNER_C_UNION_543915601* = object {.union.}
     sym*: ptr rte_crypto_sym_op
 
-  rte_crypto_op* = object
+  rte_crypto_op* {.importc: "struct rte_crypto_op", header: "rte_crypto.h".} = object
     `type`*: rte_crypto_op_type
     status*: rte_crypto_op_status
     mempool*: ptr rte_mempool

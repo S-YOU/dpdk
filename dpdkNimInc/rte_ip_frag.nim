@@ -13,12 +13,12 @@ const
   IP_MAX_FRAG_NUM* = RTE_LIBRTE_IP_FRAG_MAX_FRAG
 
 type
-  ip_frag* = object
+  ip_frag* {.importc: "struct ip_frag", header: "rte_ip_frag.h".} = object
     ofs*: uint16
     len*: uint16
     mb*: ptr rte_mbuf
 
-  ip_frag_key* = object
+  ip_frag_key* {.importc: "struct ip_frag_key", header: "rte_ip_frag.h".} = object
     src_dst*: array[4, uint64]
     id*: uint32
     key_len*: uint32
@@ -27,7 +27,7 @@ type
     tqe_next*: ptr ip_frag_pkt
     tqe_prev*: ptr ptr ip_frag_pkt
 
-  ip_frag_pkt* = object
+  ip_frag_pkt* {.importc: "struct ip_frag_pkt", header: "rte_ip_frag.h".} = object
     lru*: INNER_C_STRUCT_1474051330
     key*: ip_frag_key
     start*: uint64
@@ -36,15 +36,15 @@ type
     last_idx*: uint32
     frags*: array[IP_MAX_FRAG_NUM, ip_frag]
 
-  rte_ip_frag_death_row* = object
+  rte_ip_frag_death_row* {.importc: "struct rte_ip_frag_death_row", header: "rte_ip_frag.h".} = object
     cnt*: uint32
     row*: array[32 * (IP_MAX_FRAG_NUM + 1), ptr rte_mbuf]
 
-  ip_pkt_list* = object
+  ip_pkt_list* {.importc: "struct ip_pkt_list", header: "rte_ip_frag.h".} = object
     tqh_first*: ptr ip_frag_pkt
     tqh_last*: ptr ptr ip_frag_pkt
 
-  ip_frag_tbl_stat* = object
+  ip_frag_tbl_stat* {.importc: "struct ip_frag_tbl_stat", header: "rte_ip_frag.h".} = object
     find_num*: uint64
     add_num*: uint64
     del_num*: uint64
@@ -52,7 +52,7 @@ type
     fail_total*: uint64
     fail_nospace*: uint64
 
-  rte_ip_frag_tbl* = object
+  rte_ip_frag_tbl* {.importc: "struct rte_ip_frag_tbl", header: "rte_ip_frag.h".} = object
     max_cycles*: uint64
     entry_mask*: uint32
     max_entries*: uint32
@@ -65,7 +65,7 @@ type
     stat*: ip_frag_tbl_stat
     pkt*: array[0, ip_frag_pkt]
 
-  ipv6_extension_fragment* = object
+  ipv6_extension_fragment* {.importc: "struct ipv6_extension_fragment", header: "rte_ip_frag.h".} = object
     next_header*: uint8
     reserved*: uint8
     frag_data*: uint16

@@ -8,7 +8,8 @@ type
   rdline_validate_t* = proc (rdl: ptr rdline; buf: cstring; size: cuint) {.cdecl.}
   rdline_complete_t* = proc (rdl: ptr rdline; buf: cstring; dstbuf: cstring;
                           dstsize: cuint; state: ptr cint): cint {.cdecl.}
-  rdline* = object
+
+  rdline* {.importc: "struct rdline", header: "cmdline_rdline.h".} = object
     status*: rdline_status
     left*: cirbuf
     right*: cirbuf

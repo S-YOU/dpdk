@@ -82,13 +82,13 @@ type
 
 
 type
-  rte_eth_mac_filter* = object
+  rte_eth_mac_filter* {.importc: "struct rte_eth_mac_filter", header: "rte_eth_ctrl.h".} = object
     is_vf*: uint8
     dst_id*: uint16
     filter_type*: rte_mac_filter_type
     mac_addr*: ether_addr
 
-  rte_eth_ethertype_filter* = object
+  rte_eth_ethertype_filter* {.importc: "struct rte_eth_ethertype_filter", header: "rte_eth_ctrl.h".} = object
     mac_addr*: ether_addr
     ether_type*: uint16
     flags*: uint16
@@ -101,11 +101,11 @@ type
 #    priority*: uint8
 #    queue*: uint16
 
-  rte_eth_syn_filter* = object
+  rte_eth_syn_filter* {.importc: "struct rte_eth_syn_filter", header: "rte_eth_ctrl.h".} = object
     hig_pri*: uint8
     queue*: uint16
 
-  rte_eth_ntuple_filter* = object
+  rte_eth_ntuple_filter* {.importc: "struct rte_eth_ntuple_filter", header: "rte_eth_ctrl.h".} = object
     flags*: uint16
     dst_ip*: uint32
     dst_ip_mask*: uint32
@@ -137,7 +137,7 @@ type
     ipv4_addr*: uint32
     ipv6_addr*: array[4, uint32]
 
-  rte_eth_tunnel_filter_conf* = object
+  rte_eth_tunnel_filter_conf* {.importc: "struct rte_eth_tunnel_filter_conf", header: "rte_eth_ctrl.h".} = object
     outer_mac*: ether_addr
     inner_mac*: ether_addr
     inner_vlan*: uint16
@@ -158,7 +158,7 @@ type
     gre_key_len*: uint8
     reserved*: uint64
 
-  rte_eth_global_cfg* = object
+  rte_eth_global_cfg* {.importc: "struct rte_eth_global_cfg", header: "rte_eth_ctrl.h".} = object
     cfg_type*: rte_eth_global_cfg_type
     cfg*: INNER_C_UNION_1775731305
 
@@ -197,62 +197,62 @@ type
 
 
 type
-  rte_eth_input_set_conf* = object
+  rte_eth_input_set_conf* {.importc: "struct rte_eth_input_set_conf", header: "rte_eth_ctrl.h".} = object
     flow_type*: uint16
     inset_size*: uint16
     field*: array[128, rte_eth_input_set_field]
     op*: rte_filter_input_set_op
 
-  rte_eth_l2_flow* = object
+  rte_eth_l2_flow* {.importc: "struct rte_eth_l2_flow", header: "rte_eth_ctrl.h".} = object
     ether_type*: uint16
 
-  rte_eth_ipv4_flow* = object
+  rte_eth_ipv4_flow* {.importc: "struct rte_eth_ipv4_flow", header: "rte_eth_ctrl.h".} = object
     src_ip*: uint32
     dst_ip*: uint32
     tos*: uint8
     ttl*: uint8
     proto*: uint8
 
-  rte_eth_udpv4_flow* = object
+  rte_eth_udpv4_flow* {.importc: "struct rte_eth_udpv4_flow", header: "rte_eth_ctrl.h".} = object
     ip*: rte_eth_ipv4_flow
     src_port*: uint16
     dst_port*: uint16
 
-  rte_eth_tcpv4_flow* = object
+  rte_eth_tcpv4_flow* {.importc: "struct rte_eth_tcpv4_flow", header: "rte_eth_ctrl.h".} = object
     ip*: rte_eth_ipv4_flow
     src_port*: uint16
     dst_port*: uint16
 
-  rte_eth_sctpv4_flow* = object
+  rte_eth_sctpv4_flow* {.importc: "struct rte_eth_sctpv4_flow", header: "rte_eth_ctrl.h".} = object
     ip*: rte_eth_ipv4_flow
     src_port*: uint16
     dst_port*: uint16
     verify_tag*: uint32
 
-  rte_eth_ipv6_flow* = object
+  rte_eth_ipv6_flow* {.importc: "struct rte_eth_ipv6_flow", header: "rte_eth_ctrl.h".} = object
     src_ip*: array[4, uint32]
     dst_ip*: array[4, uint32]
     tc*: uint8
     proto*: uint8
     hop_limits*: uint8
 
-  rte_eth_udpv6_flow* = object
+  rte_eth_udpv6_flow* {.importc: "struct rte_eth_udpv6_flow", header: "rte_eth_ctrl.h".} = object
     ip*: rte_eth_ipv6_flow
     src_port*: uint16
     dst_port*: uint16
 
-  rte_eth_tcpv6_flow* = object
+  rte_eth_tcpv6_flow* {.importc: "struct rte_eth_tcpv6_flow", header: "rte_eth_ctrl.h".} = object
     ip*: rte_eth_ipv6_flow
     src_port*: uint16
     dst_port*: uint16
 
-  rte_eth_sctpv6_flow* = object
+  rte_eth_sctpv6_flow* {.importc: "struct rte_eth_sctpv6_flow", header: "rte_eth_ctrl.h".} = object
     ip*: rte_eth_ipv6_flow
     src_port*: uint16
     dst_port*: uint16
     verify_tag*: uint32
 
-  rte_eth_mac_vlan_flow* = object
+  rte_eth_mac_vlan_flow* {.importc: "struct rte_eth_mac_vlan_flow", header: "rte_eth_ctrl.h".} = object
     mac_addr*: ether_addr
 
   rte_eth_fdir_tunnel_type* = enum
@@ -261,12 +261,12 @@ type
 
 
 type
-  rte_eth_tunnel_flow* = object
+  rte_eth_tunnel_flow* {.importc: "struct rte_eth_tunnel_flow", header: "rte_eth_ctrl.h".} = object
     tunnel_type*: rte_eth_fdir_tunnel_type
     tunnel_id*: uint32
     mac_addr*: ether_addr
 
-  rte_eth_fdir_flow* = object {.union.}
+  rte_eth_fdir_flow* {.importc: "union rte_eth_fdir_flow", header: "rte_eth_ctrl.h".} = object {.union.}
     l2_flow*: rte_eth_l2_flow
     udp4_flow*: rte_eth_udpv4_flow
     tcp4_flow*: rte_eth_tcpv4_flow
@@ -279,13 +279,13 @@ type
     mac_vlan_flow*: rte_eth_mac_vlan_flow
     tunnel_flow*: rte_eth_tunnel_flow
 
-  rte_eth_fdir_flow_ext* = object
+  rte_eth_fdir_flow_ext* {.importc: "struct rte_eth_fdir_flow_ext", header: "rte_eth_ctrl.h".} = object
     vlan_tci*: uint16
     flexbytes*: array[16, uint8]
     is_vf*: uint8
     dst_id*: uint16
 
-  rte_eth_fdir_input* = object
+  rte_eth_fdir_input* {.importc: "struct rte_eth_fdir", header: "rte_eth_ctrl.h".} = object
     flow_type*: uint16
     flow*: rte_eth_fdir_flow
     flow_ext*: rte_eth_fdir_flow_ext
@@ -301,18 +301,18 @@ type
 
 
 type
-  rte_eth_fdir_action* = object
+  rte_eth_fdir_action* {.importc: "struct rte_eth_fdir_action", header: "rte_eth_ctrl.h".} = object
     rx_queue*: uint16
     behavior*: rte_eth_fdir_behavior
     report_status*: rte_eth_fdir_status
     flex_off*: uint8
 
-  rte_eth_fdir_filter* = object
+  rte_eth_fdir_filter* {.importc: "struct rte_eth_fdir_filter", header: "rte_eth_ctrl.h".} = object
     soft_id*: uint32
     input*: rte_eth_fdir_input
     action*: rte_eth_fdir_action
 
-  rte_eth_fdir_masks* = object
+  rte_eth_fdir_masks* {.importc: "struct rte_eth_fdir_masks", header: "rte_eth_ctrl.h".} = object
     vlan_tci_mask*: uint16
     ipv4_mask*: rte_eth_ipv4_flow
     ipv6_mask*: rte_eth_ipv6_flow
@@ -328,15 +328,15 @@ type
 
 
 type
-  rte_eth_flex_payload_cfg* = object
+  rte_eth_flex_payload_cfg* {.importc: "struct rte_eth_flex_payload_cfg", header: "rte_eth_ctrl.h".} = object
     `type`*: rte_eth_payload_type
     src_offset*: array[16, uint16]
 
-  rte_eth_fdir_flex_mask* = object
+  rte_eth_fdir_flex_mask* {.importc: "struct rte_eth_fdir_flex_mask", header: "rte_eth_ctrl.h".} = object
     flow_type*: uint16
     mask*: array[16, uint8]
 
-  rte_eth_fdir_flex_conf* = object
+  rte_eth_fdir_flex_conf* {.importc: "struct rte_eth_fdir_flex_conf", header: "rte_eth_ctrl.h".} = object
     nb_payloads*: uint16
     nb_flexmasks*: uint16
     flex_set*: array[RTE_ETH_PAYLOAD_MAX, rte_eth_flex_payload_cfg]
@@ -363,7 +363,7 @@ type
 #    flex_bitmask_unit*: uint32
 #    max_flex_bitmask_num*: uint32
 
-  rte_eth_fdir_stats* = object
+  rte_eth_fdir_stats* {.importc: "struct rte_eth_fdir_stats", header: "rte_eth_ctrl.h".} = object
     collision*: uint32
     free*: uint32
     maxhash*: uint32
@@ -384,7 +384,7 @@ type
   INNER_C_UNION_2865718372* = object {.union.}
     input_set_conf*: rte_eth_input_set_conf
 
-  rte_eth_fdir_filter_info* = object
+  rte_eth_fdir_filter_info* {.importc: "struct rte_eth_fdir_filter_info", header: "rte_eth_ctrl.h".} = object
     info_type*: rte_eth_fdir_filter_info_type
     info*: INNER_C_UNION_2865718372
 
@@ -417,7 +417,7 @@ type
 #    info_type*: rte_eth_hash_filter_info_type
 #    info*: INNER_C_UNION_164971495
 
-  rte_eth_l2_tunnel_conf* = object
+  rte_eth_l2_tunnel_conf* {.importc: "struct rte_eth_l2_tunnel_conf", header: "rte_eth_ctrl.h".} = object
     l2_tunnel_type*: rte_eth_tunnel_type
     ether_type*: uint16
     tunnel_id*: uint32

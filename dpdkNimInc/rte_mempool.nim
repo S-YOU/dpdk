@@ -18,13 +18,13 @@ const
   RTE_MEMPOOL_MAX_OPS_IDX* = 16
 
 type
-  rte_mempool_cache* = object
+  rte_mempool_cache* {.importc: "struct rte_mempool_cache", header: "rte_mempool.h".} = object
     size*: uint32
     flushthresh*: uint32
     len*: uint32
     objs*: array[RTE_MEMPOOL_CACHE_MAX_SIZE * 3, pointer]
 
-  rte_mempool_objsz* = object
+  rte_mempool_objsz* {.importc: "struct rte_mempool_objsz", header: "rte_mempool.h".} = object
     elt_size*: uint32
     header_size*: uint32
     trailer_size*: uint32
@@ -33,16 +33,16 @@ type
   INNER_C_STRUCT_996886926* = object
     stqe_next*: ptr rte_mempool_objhdr
 
-  rte_mempool_objhdr* = object
+  rte_mempool_objhdr* {.importc: "struct rte_mempool_objhdr", header: "rte_mempool.h".} = object
     next*: INNER_C_STRUCT_996886926
     mp*: ptr rte_mempool
     physaddr*: phys_addr_t
 
-  rte_mempool_objhdr_list* = object
+  rte_mempool_objhdr_list* {.importc: "struct rte_mempool_objhdr_list", header: "rte_mempool.h".} = object
     stqh_first*: ptr rte_mempool_objhdr
     stqh_last*: ptr ptr rte_mempool_objhdr
 
-  rte_mempool_memhdr_list* = object
+  rte_mempool_memhdr_list* {.importc: "struct rte_mempool_memhdr_list", header: "rte_mempool.h".} = object
     stqh_first*: ptr rte_mempool_memhdr
     stqh_last*: ptr ptr rte_mempool_memhdr
 
@@ -51,7 +51,7 @@ type
   INNER_C_STRUCT_1355864016* = object
     stqe_next*: ptr rte_mempool_memhdr
 
-  rte_mempool_memhdr* = object
+  rte_mempool_memhdr* {.importc: "struct rte_mempool_memhdr", header: "rte_mempool.h".} = object
     next*: INNER_C_STRUCT_1355864016
     mp*: ptr rte_mempool
     `addr`*: pointer
@@ -64,7 +64,7 @@ type
     pool_data*: pointer
     pool_id*: uint64
 
-  rte_mempool* = object
+  rte_mempool* {.importc: "struct rte_mempool", header: "rte_mempool.h".} = object
     name*: array[32, char]
     ano_2692653354*: INNER_C_UNION_2676130347
     pool_config*: pointer
@@ -94,7 +94,7 @@ type
   rte_mempool_enqueue_t* = proc (mp: ptr rte_mempool; obj_table: ptr pointer; n: cuint): cint {.cdecl.}
   rte_mempool_dequeue_t* = proc (mp: ptr rte_mempool; obj_table: ptr pointer; n: cuint): cint {.cdecl.}
   rte_mempool_get_count* = proc (mp: ptr rte_mempool): cuint {.cdecl.}
-  rte_mempool_ops* = object
+  rte_mempool_ops* {.importc: "struct rte_mempool_ops", header: "rte_mempool.h".} = object
     name*: array[32, char]
     alloc*: rte_mempool_alloc_t
     free*: rte_mempool_free_t
@@ -102,7 +102,7 @@ type
     dequeue*: rte_mempool_dequeue_t
     get_count*: rte_mempool_get_count
 
-  rte_mempool_ops_table* = object
+  rte_mempool_ops_table* {.importc: "struct rte_mempool_ops_table", header: "rte_mempool.h".} = object
     sl*: rte_spinlock_t
     num_ops*: uint32
     ops*: array[16, rte_mempool_ops]

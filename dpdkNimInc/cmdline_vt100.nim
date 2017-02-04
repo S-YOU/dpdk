@@ -53,7 +53,7 @@ type
 
 
 type
-  cmdline_vt100* = object
+  cmdline_vt100* {.importc: "struct cmdline_vt100", header: "cmdline_vt100.h".} = object
     bufpos*: uint8
     buf*: array[8, char]
     state*: cmdline_vt100_parser_state

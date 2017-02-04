@@ -10,20 +10,20 @@ const
   RTE_RED_WQ_LOG2_NUM* = (RTE_RED_WQ_LOG2_MAX - RTE_RED_WQ_LOG2_MIN + 1)
 
 type
-  rte_red_params* = object
+  rte_red_params* {.importc: "struct rte_red_params", header: "rte_red.h".} = object
     min_th*: uint16
     max_th*: uint16
     maxp_inv*: uint16
     wq_log2*: uint16
 
-  rte_red_config* = object
+  rte_red_config* {.importc: "struct rte_red_config", header: "rte_red.h".} = object
     min_th*: uint32
     max_th*: uint32
     pa_const*: uint32
     maxp_inv*: uint8
     wq_log2*: uint8
 
-  rte_red* = object
+  rte_red* {.importc: "struct rte_red", header: "rte_red.h".} = object
     avg*: uint32
     count*: uint32
     q_time*: uint64

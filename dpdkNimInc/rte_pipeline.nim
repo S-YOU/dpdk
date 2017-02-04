@@ -15,7 +15,7 @@ type
     port_id*: uint32
     table_id*: uint32
 
-  rte_pipeline_table_entry* = object
+  rte_pipeline_table_entry* {.importc: "struct rte_pipeline_table_entry", header: "rte_pipeline.h".} = object
     action*: rte_pipeline_action
     ano_1840054312*: INNER_C_UNION_771960961
     action_data*: array[0, uint8]
@@ -87,20 +87,20 @@ type
     n_pkts_ah_drop*: uint64
     pkts_drop_mask*: uint64
 
-  rte_pipeline_params* = object
+  rte_pipeline_params* {.importc: "struct rte_pipeline_params", header: "rte_pipeline.h".} = object
     name*: cstring
     socket_id*: cint
     offset_port_id*: uint32
 
-  rte_pipeline_port_in_stats* = object
+  rte_pipeline_port_in_stats* {.importc: "struct rte_pipeline_port_in_stats", header: "rte_pipeline.h".} = object
     stats*: rte_port_in_stats
     n_pkts_dropped_by_ah*: uint64
 
-  rte_pipeline_port_out_stats* = object
+  rte_pipeline_port_out_stats* {.importc: "struct rte_pipeline_port_out_stats", header: "rte_pipeline.h".} = object
     stats*: rte_port_out_stats
     n_pkts_dropped_by_ah*: uint64
 
-  rte_pipeline_table_stats* = object
+  rte_pipeline_table_stats* {.importc: "struct rte_pipeline_table_stats", header: "rte_pipeline.h".} = object
     stats*: rte_table_stats
     n_pkts_dropped_by_lkp_hit_ah*: uint64
     n_pkts_dropped_by_lkp_miss_ah*: uint64
