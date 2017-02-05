@@ -21,7 +21,7 @@ type
     mem_config*: ptr rte_mem_config
 
 
-proc rte_eal_get_configuration*(): ptr rte_config {.cdecl.}
+proc rte_eal_get_configuration*(): ptr rte_config {.importc, header: "rte_eal.h".}
 proc rte_eal_lcore_role*(lcore_id: cuint): rte_lcore_role_t {.importc, header: "rte_eal.h".}
 proc rte_eal_process_type*(): rte_proc_type_t {.importc, header: "rte_eal.h".}
 proc rte_eal_iopl_init*(): cint {.importc, header: "rte_eal.h".}
