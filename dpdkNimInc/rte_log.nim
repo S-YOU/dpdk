@@ -51,7 +51,7 @@ type
     overflow_offset*: cuint
     overflow_arg_area*: cstring
                                      
-  va_list_struct* = object
+  va_list_struct* {.importc: "struct __va_list_struct", header: "stdio.h".} = object
     gp_offset*: cuint
     fp_offset*: cuint   
     ano_1946648541*: INNER_C_UNION_2963461344

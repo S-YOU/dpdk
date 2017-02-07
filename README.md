@@ -16,6 +16,13 @@ Tested on Ubuntu 16.04.1 as a guest operating system (OS) using Virtualbox.
 
 4. dpdkNimExamples - Example Nim versions of the DPDK helloworld and rxtx_callbacks examples. Please look here to see how to call the Nim DPDK API.
 
+5. dpdkExamplesMod - Modified versions of the original DPDK C examples. This currently has the C rxtx_callbacks example modified to time the average packet latencies.
+
+6. extraCHdrs4Nim - These are extra headers that were made to include the structs that are declared in the DPDK C files that were referenced by the DPDK header files. These are referenced by the files in `dpdkNimInc` using Nim pragmas.
+
+7. logs - Currently has logs comparing the average packet latencies between the DPDK C and Nim versions of rxtx_callbacks. 
+
+
 ## Getting started
 
 ### Prepare Your Development Environment
@@ -164,14 +171,22 @@ These steps should be done on the guest VM with two NIC setup.
 ### Using Nim DPDK Bindings
 1. Find a good directory to put dpdkNimInc eg. /usr/local/nimInc
 2. Find a good directory to put rteErrorWrapper eg. /usr/local/nimInc
-3. Open makeDPDKNim.sh in a text editor. Please make changes to two variables to indicate where you put the above two directories:
+3. Find a good directory to put extraCHdrs4Nim eg. /usr/local/nimInc
+4. Open makeDPDKNim.sh in a text editor. Please make changes to three variables to indicate where you put the above two directories:
 
   ```
   # directory containing DPDK Nim include files
   dpdk_nim_dir="/home/ubuntu/ukso/dpdk/nimdpdk/dpdkNimInc/"
-
+  
   # direcotry containing rte_errno wrapper archive
   rte_error_wrapper_dir="/home/ubuntu/ukso/dpdk/nimdpdk/rteErrorWrapper"
+  
+  # directory for C structs referenced by DPDK (used by files in dpdk_nim_dir)
+  extra_c_hdrs_4_nim_dir="/home/ubuntu/ukso/dpdk/nimdpdk/extraCHdrs4Nim"
+  
+  # gcc Debugging flags for easier development, leave blank for production
+  debug_flags="-g3 -g"
+
   ```
 
   You can leave `makeDPDKNim.sh` where it is or if you prefer allow global access to `makeDPDKNim.sh` by putting a copy or symlink in PATH directory eg. `/usr/local/bin/`.

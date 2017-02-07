@@ -1,0 +1,70 @@
+l = latency_numbers.total_cycles = 925197904706345418, total_pkts = 999731
+l = latency_numbers.total_cycles = 925826564441127690, total_pkts = 999763
+l = latency_numbers.total_cycles = 925964083892774470, total_pkts = 999770
+l = latency_numbers.total_cycles = 926592744274430118, total_pkts = 999802
+l = latency_numbers.total_cycles = 926730263909625081, total_pkts = 999809
+l = latency_numbers.total_cycles = 927358925132661529, total_pkts = 999841
+l = latency_numbers.total_cycles = 927496444865883211, total_pkts = 999848
+l = latency_numbers.total_cycles = 928125106542977419, total_pkts = 999880
+l = latency_numbers.total_cycles = 928262626418596615, total_pkts = 999887
+l = latency_numbers.total_cycles = 928891288733754279, total_pkts = 999919
+l = latency_numbers.total_cycles = 929028808751749513, total_pkts = 999926
+l = latency_numbers.total_cycles = 929657471723179625, total_pkts = 999958
+l = latency_numbers.total_cycles = 929794991880172620, total_pkts = 999965
+l = latency_numbers.total_cycles = 930423655485579564, total_pkts = 999997
+l = latency_numbers.total_cycles = 930561175785453934, total_pkts = 1000004
+average latency = 930557453555 cycles
+
+time elapsed = 122.381701s
+
+average latency = 1440277459806 cycles
+
+time elapsed = 84.96592099999999s
+
+average latency = 1797489819530 cycles
+
+time elapsed = 66.41401199999999s
+
+average latency = 2124114579864 cycles
+
+time elapsed = 58.06929700000001s
+
+average latency = 2368115983643 cycles
+
+time elapsed = 42.78801800000002s
+
+average latency = 2578491016838 cycles
+
+time elapsed = 40.12954300000001s
+
+average latency = 2779408560713 cycles
+
+time elapsed = 39.62996899999996s
+
+average latency = 2977291008008 cycles
+
+time elapsed = 38.62106400000005s
+
+average latency = 3174167903320 cycles
+
+time elapsed = 39.27632899999998s
+
+average latency = 3371840758315 cycles
+
+time elapsed = 39.13690099999997s
+
+average latency = 3571089411835 cycles
+
+time elapsed = 39.30575500000009s
+
+average latency = 3773026967853 cycles
+
+time elapsed = 40.4047129999999s
+
+average latency = 3976404826721 cycles
+
+time elapsed = 41.31008200000008s
+
+average latency = 4195908534899 cycles
+
+time elapsed = 44.23002599999995s

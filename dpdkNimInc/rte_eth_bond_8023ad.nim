@@ -112,8 +112,8 @@ proc rte_eth_bond_8023ad_setup_v20*(port_id: uint8;
                                    conf: ptr rte_eth_bond_8023ad_conf): cint {.importc, header: "rte_eth_bond_8023ad.h".}
 proc rte_eth_bond_8023ad_setup_v1607*(port_id: uint8;
                                      conf: ptr rte_eth_bond_8023ad_conf): cint {.importc, header: "rte_eth_bond_8023ad.h".}
-proc rte_eth_bond_8023ad_slave_info_func*(port_id: uint8; slave_id: uint8;
-                                    conf: ptr rte_eth_bond_8023ad_slave_info): cint {.importc, header: "rte_eth_bond_8023ad.h".}
+proc rte_eth_bond_8023ad_slave_info_nim*(port_id: uint8; slave_id: uint8;
+                                    conf: ptr rte_eth_bond_8023ad_slave_info): cint {.importc: "rte_eth_bond_8023ad_slave_info_func", header: "rte_eth_bond_8023ad.h".}
 proc rte_eth_bond_8023ad_ext_collect*(port_id: uint8; slave_id: uint8;
                                      enabled: cint): cint {.importc, header: "rte_eth_bond_8023ad.h".}
 proc rte_eth_bond_8023ad_ext_collect_get*(port_id: uint8; slave_id: uint8): cint {.importc, header: "rte_eth_bond_8023ad.h".}

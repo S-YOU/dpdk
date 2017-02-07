@@ -6,13 +6,9 @@ type
   rte_lcore_role_t* = enum
     ROLE_RTE, ROLE_OFF
 
-
-type
   rte_proc_type_t* = enum
     RTE_PROC_AUTO = - 1, RTE_PROC_PRIMARY = 0, RTE_PROC_SECONDARY, RTE_PROC_INVALID
 
-
-type
   rte_config* {.importc: "struct rte_config", header: "rte_eal.h".} = object
     master_lcore*: uint32
     lcore_count*: uint32

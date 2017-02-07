@@ -348,6 +348,8 @@ type
 
 
 type
+# not used
+
 #  rte_eth_fdir_info* = object
 #    mode*: rte_fdir_mode
 #    mask*: rte_eth_fdir_masks
@@ -401,6 +403,8 @@ type
 
 
 type
+# not used
+
 #  rte_eth_hash_global_conf* = object
 #    hash_func*: rte_eth_hash_function
 #    sym_hash_enable_mask*: array[(RTE_ALIGN(22, (CHAR_BIT * sizeof((uint32)))) div

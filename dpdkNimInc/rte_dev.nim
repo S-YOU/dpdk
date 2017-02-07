@@ -1,6 +1,6 @@
 proc rte_pmd_debug_trace*(func_name: cstring; fmt: cstring) {.inline, varargs, importc, header: "rte_dev.h".}
 type
-  rte_driver_list* = object
+  rte_driver_list* {.importc: "struct rte_driver_list", header: "rte_dev.h".} = object
     tqh_first*: ptr rte_driver
     tqh_last*: ptr ptr rte_driver
 

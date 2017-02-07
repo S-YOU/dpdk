@@ -1,8 +1,8 @@
 type
-  cmdline_portlist_t* {.importc: "cmdline_portlist_t", header: "cmdline_parse_num.h".} = object
+  cmdline_portlist_t* {.importc: "cmdline_portlist_t", header: "cmdline_parse_portlist.h".} = object
     map*: uint32
 
-  cmdline_token_portlist* {.importc: "cmdline_portlist_t", header: "cmdline_parse_num.h".} = object
+  cmdline_token_portlist* {.importc: "cmdline_portlist_t", header: "cmdline_parse_portlist.h".} = object
     hdr*: cmdline_token_hdr
 
   cmdline_parse_token_portlist_t* = cmdline_token_portlist

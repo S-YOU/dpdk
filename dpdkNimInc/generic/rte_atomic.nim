@@ -1,7 +1,9 @@
 proc rte_atomic16_cmpset*(dst: ptr uint16; exp: uint16; src: uint16): cint {.inline, importc, header: "rte_atomic.h".}
 type
+# for some reason putting the pragma clause here causes error
+# error: field ‘refcntatomic’ has incomplete type
   rte_atomic16_t* = object
-    cnt*: int16
+    cnt*: int16 
 
 
 proc rte_atomic16_init*(v: ptr rte_atomic16_t) {.inline, importc, header: "rte_atomic.h".}

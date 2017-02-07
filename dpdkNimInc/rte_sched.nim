@@ -17,7 +17,7 @@ type
     e_GRINDER_PREFETCH_PIPE = 0, e_GRINDER_PREFETCH_TC_QUEUE_ARRAYS,
     e_GRINDER_PREFETCH_MBUF, e_GRINDER_READ_MBUF
 
-  rte_sched_pipe_profile* = object
+  rte_sched_pipe_profile* {.importc: "struct rte_sched_pipe_profile", header: "cDecStructs.h".} = object
     tb_period*: uint32       ##  Token bucket (TB)
     tb_credits_per_period*: uint32
     tb_size*: uint32         ##  Pipe traffic classes
@@ -26,16 +26,16 @@ type
     tc_ov_weight*: uint8     ##  Pipe queues
     wrr_cost*: array[RTE_SCHED_QUEUES_PER_PIPE, uint8]
 
-  rte_sched_queue_extra* = object
+  rte_sched_queue_extra* {.importc: "struct rte_sched_queue_extra", header: "cDecStructs.h".} = object
     stats*: rte_sched_queue_stats ## #ifdef RTE_SCHED_RED
                                 ##   struct rte_red red;
                                 ## #endif
   
-  rte_sched_queue* = object
+  rte_sched_queue* {.importc: "struct rte_sched_queue", header: "cDecStructs.h".} = object
     qw*: uint16
     qr*: uint16
 
-  rte_sched_pipe* = object
+  rte_sched_pipe* {.importc: "struct rte_sched_pipe", header: "cDecStructs.h".} = object
     tb_time*: uint64         ##  Token bucket (TB)
     ##  time of last update
     tb_credits*: uint32      ##  Pipe profile and flags
@@ -47,7 +47,7 @@ type
     tc_ov_period_id*: uint8
     reserved*: array[3, uint8]
 
-  rte_sched_subport* = object
+  rte_sched_subport* {.importc: "struct rte_sched_subport", header: "cDecStructs.h".} = object
     tb_time*: uint64         ##  Token bucket (TB)
     ##  time of last update
     tb_period*: uint32
@@ -67,7 +67,7 @@ type
     tc_ov_rate*: cdouble       ##  Statistics
     stats*: rte_sched_subport_stats
 
-  rte_sched_grinder* = object
+  rte_sched_grinder* {.importc: "struct rte_sched_grinder", header: "cDecStructs.h".} = object
     pcache_qmask*: array[RTE_SCHED_GRINDER_PCACHE_SIZE, uint16] ##  Pipe cache
     pcache_qindex*: array[RTE_SCHED_GRINDER_PCACHE_SIZE, uint32]
     pcache_w*: uint32
@@ -94,7 +94,7 @@ type
     wrr_mask*: array[RTE_SCHED_QUEUES_PER_TRAFFIC_CLASS, uint16]
     wrr_cost*: array[RTE_SCHED_QUEUES_PER_TRAFFIC_CLASS, uint8]
 
-  rte_sched_port* = object
+  rte_sched_port* {.importc: "struct rte_sched_port", header: "cDecStructs.h".} = object
     n_subports_per_port*: uint32 ##  User parameters
     n_pipes_per_subport*: uint32
     rate*: uint32

@@ -35,7 +35,7 @@ type
       entry: ptr rte_pipeline_table_entry; arg: pointer): cint {.cdecl.}
 
 # from lib/librte_pipeline/rte_pipeline.c
-  rte_port_in* = object
+  rte_port_in* {.importc: "struct rte_port_in", header: "cDecStructs.h".} = object
     ops*: rte_port_in_ops      ##  Input parameters
     f_action*: rte_pipeline_port_in_action_handler
     arg_ah*: pointer
@@ -45,14 +45,14 @@ type
     next*: ptr rte_port_in      ##  Statistics
     n_pkts_dropped_by_ah*: uint64
 
-  rte_port_out* = object
+  rte_port_out* {.importc: "struct rte_port_out", header: "cDecStructs.h".} = object
     ops*: rte_port_out_ops     ##  Input parameters
     f_action*: rte_pipeline_port_out_action_handler
     arg_ah*: pointer           ##  Handle to low-level port
     h_port*: pointer           ##  Statistics
     n_pkts_dropped_by_ah*: uint64
 
-  rte_table* = object
+  rte_table* {.importc: "struct rte_table", header: "cDecStructs.h".} = object
     ops*: rte_table_ops        ##  Input parameters
     f_action_hit*: rte_pipeline_table_action_handler_hit
     f_action_miss*: rte_pipeline_table_action_handler_miss
@@ -67,7 +67,7 @@ type
     n_pkts_dropped_lkp_hit*: uint64
     n_pkts_dropped_lkp_miss*: uint64
 
-  rte_pipeline* = object
+  rte_pipeline* {.importc: "struct rte_pipeline", header: "cDecStructs.h".} = object
     name*: array[RTE_PIPELINE_MAX_NAME_SZ, char] ##  Input parameters
     socket_id*: cint
     offset_port_id*: uint32  ##  Internal tables
@@ -117,7 +117,7 @@ type
 
 
 
-  rte_pipeline_table_params* = object
+  rte_pipeline_table_params* {.importc: "struct rte_pipeline_table_params", header: "rte_pipeline.h".} = object
     ops*: ptr rte_table_ops
     arg_create*: pointer
     f_action_hit*: rte_pipeline_table_action_handler_hit
@@ -152,7 +152,7 @@ proc rte_pipeline_table_entry_delete_bulk*(p: ptr rte_pipeline; table_id: uint32
 proc rte_pipeline_table_stats_read*(p: ptr rte_pipeline; table_id: uint32;
                                    stats: ptr rte_pipeline_table_stats; clear: cint): cint {.importc, header: "rte_pipeline.h".}
 type
-  rte_pipeline_port_in_params* = object
+  rte_pipeline_port_in_params* {.importc: "struct rte_pipeline_port_in_params", header: "rte_pipeline.h".} = object
     ops*: ptr rte_port_in_ops
     arg_create*: pointer
     f_action*: rte_pipeline_port_in_action_handler
@@ -171,7 +171,7 @@ proc rte_pipeline_port_in_stats_read*(p: ptr rte_pipeline; port_id: uint32;
                                      stats: ptr rte_pipeline_port_in_stats;
                                      clear: cint): cint {.importc, header: "rte_pipeline.h".}
 type
-  rte_pipeline_port_out_params* = object
+  rte_pipeline_port_out_params* {.importc: "struct rte_pipeline_port_in_params", header: "rte_pipeline.h".} = object
     ops*: ptr rte_port_out_ops
     arg_create*: pointer
     f_action*: rte_pipeline_port_out_action_handler

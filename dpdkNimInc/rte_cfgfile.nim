@@ -3,8 +3,18 @@ const
   CFG_VALUE_LEN* = 256
 
 type
-  rte_cfgfile* = object
-  
+#  start lib/librte_cfgfile/rte_cfgfile.c
+  rte_cfgfile_section* {.importc: "struct rte_cfgfile_section", header: "cDecStructs.h".} = object
+    name*: array[CFG_NAME_LEN, char]
+    num_entries*: cint
+    entries*: array[0, ptr rte_cfgfile_entry]
+
+  rte_cfgfile* {.importc: "struct rte_cfgfile", header: "cDecStructs.h".} = object 
+    flags*: cint
+    num_sections*: cint
+    sections*: array[0, ptr rte_cfgfile_section]
+#  end lib/librte_cfgfile/rte_cfgfile.c
+
   rte_cfgfile_entry* {.importc: "struct rte_cfgfile_entry", header: "rte_cfgfile.h".} = object
     name*: array[64, char]
     value*: array[256, char]

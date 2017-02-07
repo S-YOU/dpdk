@@ -296,7 +296,7 @@ type
   enqueue_pkt_burst_t* = proc (qp: pointer; ops: ptr ptr rte_crypto_op; nb_ops: uint16): uint16 {.cdecl.}
   rte_cryptodev_callback* = object
   
-  rte_cryptodev_cb_list* = object
+  rte_cryptodev_cb_list* {.importc: "struct rte_cryptodev_cb_list", header: "rte_cryptodev_pmd.h".} = object
     tqh_first*: ptr rte_cryptodev_callback
     tqh_last*: ptr ptr rte_cryptodev_callback
 
@@ -399,7 +399,7 @@ type
     ano_565536067*: INNER_C_STRUCT_540751557
     private*: array[0, char]
 
-  rte_cryptodev_global* = object
+  rte_cryptodev_global* {.importc: "struct rte_cryptodev_global", header: "rte_cryptodev_pmd.h".} = object
     devs*: ptr rte_cryptodev
     data*: array[RTE_CRYPTO_MAX_DEVS, ptr rte_cryptodev_data]
     nb_devs*: uint8

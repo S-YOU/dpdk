@@ -43,25 +43,7 @@ const
   MBUF_CACHE_SIZE* = 250.cuint
   BURST_SIZE* = 32.uint16
 
-# [ref: https://glot.io/snippets/ej532ijerl]
-proc `+`[T](a: ptr T, b: int): ptr T =
-  if b >= 0:
-    cast[ptr T](cast[uint](a) + cast[uint](b*a[].sizeof))
-  else:
-    cast[ptr T](cast[uint](a) - cast[uint](-1 * b*a[].sizeof))
-
-template `-`[T](a: ptr T, b: int): ptr T = `+`(a, -b)
-
 var nb_ports: uint8
-
-type
-  latency_numbers_t = object
-    total_cycles: uint64
-    total_pkts:  uint64
-
-var latency_numbers: latency_numbers_t
-
-proc rte_eal_get_configuration*(): ptr rte_config = nil
 
 proc port_init(port: uint8; mbuf_pool: ptr rte_mempool): cint {.exportc: "port_init", cdecl.} =
 
@@ -75,7 +57,7 @@ proc port_init(port: uint8; mbuf_pool: ptr rte_mempool): cint {.exportc: "port_i
     tx_rings: uint16 = 1
 
   var retval: cint
-  var q: uint16
+
 
   if port >= rte_eth_dev_count():
     return - 1
@@ -87,6 +69,7 @@ proc port_init(port: uint8; mbuf_pool: ptr rte_mempool): cint {.exportc: "port_i
   else:
     echo "rte_eth_dev_configure() ok"
 
+  var q: uint16 = 0
   var socket_id: cuint = (rte_eth_dev_socket_id(port)).cuint
   while q < rx_rings:
     retval = rte_eth_rx_queue_setup(port, q,
@@ -98,6 +81,8 @@ proc port_init(port: uint8; mbuf_pool: ptr rte_mempool): cint {.exportc: "port_i
 
     inc(q)
 
+  # always make sure to reset our counters
+  q = 0
   while q < tx_rings:
     retval = rte_eth_tx_queue_setup(port, q, 
       TX_RING_SIZE, socket_id, nil)
@@ -153,11 +138,8 @@ proc lcore_main() {.exportc: "lcore_main", cdecl.} =
       if 0.uint16 != nb_rx:
         echo "nb_rx = ", nb_rx
 
-      # continues if nb_rx = 0
-      # 1 == (nb_rx == 0)
-      if nb_rx == 0:
+      if unlikely(nb_rx == 0):
         continue
-
 
       var ind = 0.uint16
       while ind< nb_rx:
@@ -170,8 +152,7 @@ proc lcore_main() {.exportc: "lcore_main", cdecl.} =
 
       echo "nb_tx = ", nb_tx
       
-      # 1 == (nb_tx < 0)
-      if nb_tx < nb_rx:
+      if unlikely(nb_tx < nb_rx):
         var buf: uint16
         echo "D"
 
@@ -236,6 +217,7 @@ proc go(argc: var cint; argv: var cstringArray): cint =
 
   lcore_main()
   return 0
+
 
 when isMainModule:
 

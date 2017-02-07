@@ -20,7 +20,8 @@ type
                             entries: ptr pointer): cint {.cdecl.}
   rte_table_op_stats_read* = proc (table: pointer; stats: ptr rte_table_stats;
                                 clear: cint): cint {.cdecl.}
-  rte_table_ops* = object
+
+  rte_table_ops* {.importc: "struct rte_table_ops", header: "rte_table.h".} = object
     f_create*: rte_table_op_create
     f_free*: rte_table_op_free
     f_add*: rte_table_op_entry_add

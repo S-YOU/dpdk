@@ -16,7 +16,7 @@ type
     state*: uint16
     owner*: int16
 
-  rte_timer_status* {.importc: "struct rte_timer_status", header: "rte_timer.h", union.} = object 
+  rte_timer_status* {.importc: "union rte_timer_status", header: "rte_timer.h", union.} = object 
     ano_651049294*: INNER_C_STRUCT_1761507430
     u32*: uint32
 

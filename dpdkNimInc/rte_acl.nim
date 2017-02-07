@@ -7,7 +7,7 @@ const
   RTE_ACL_NAMESIZE* = 32
 
 type
-  rte_acl_field_types* {.importc: "union rte_acl_field_types", header: "rte_acl.h".} = object {.union.}
+  rte_acl_field_types* {.importc: "union rte_acl_field_types", header: "rte_acl.h".} = object
     u8*: uint8
     u16*: uint16
     u32*: uint32
@@ -20,20 +20,20 @@ const
   RTE_ACL_FIELD_TYPE_BITMASK* = 2
 
 type
-  rte_acl_field_def* {.importc: "union rte_acl_field_def", header: "rte_acl.h".} = object
+  rte_acl_field_def* {.importc: "struct rte_acl_field_def", header: "rte_acl.h".} = object
     `type`*: uint8
     size*: uint8
     field_index*: uint8
     input_index*: uint8
     offset*: uint32
 
-  rte_acl_config* {.importc: "union rte_acl_config", header: "rte_acl.h".} = object
+  rte_acl_config* {.importc: "struct rte_acl_config", header: "rte_acl.h".} = object
     num_categories*: uint32
     num_fields*: uint32
     defs*: array[64, rte_acl_field_def]
     max_size*: csize
 
-  rte_acl_field* {.importc: "union rte_acl_field", header: "rte_acl.h".} = object
+  rte_acl_field* {.importc: "struct rte_acl_field", header: "rte_acl.h".} = object
     value*: rte_acl_field_types
     mask_range*: rte_acl_field_types
 
@@ -45,7 +45,7 @@ const
   RTE_ACL_MIN_PRIORITY* = 0
 
 type
-  rte_acl_rule_data* {.importc: "union rte_acl_rule_data", header: "rte_acl.h".} = object
+  rte_acl_rule_data* {.importc: "struct rte_acl_rule_data", header: "rte_acl.h".} = object
     category_mask*: uint32
     priority*: int32
     userdata*: uint32
@@ -54,7 +54,7 @@ type
     data*: rte_acl_rule_data
     field*: array[0, rte_acl_field]
 
-  rte_acl_param* {.importc: "union rte_acl_param", header: "rte_acl.h".} = object
+  rte_acl_param* {.importc: "struct rte_acl_param", header: "rte_acl.h".} = object
     name*: cstring
     socket_id*: cint
     rule_size*: uint32
@@ -83,14 +83,15 @@ const
   RTE_ACL_BIT_SET_SIZE = 8
 
 type
-  rte_acl_bitset* = object
+# start lib/librte_acl/acl.h
+  rte_acl_bitset* {.importc: "struct rte_acl_bitset", header: "cDecStructs.h".} = object
     bits*: array[RTE_ACL_BIT_SET_SIZE, bits_t]
 
-  rte_acl_ptr_set* = object
+  rte_acl_ptr_set* {.importc: "struct rte_acl_ptr_set", header: "cDecStructs.h".} = object
     values*: rte_acl_bitset    ##  input values associated with ptr
     `ptr`*: ptr rte_acl_node    ##  transition to next node
   
-  rte_acl_match_results* = object
+  rte_acl_match_results* {.importc: "struct rte_acl_match_results", header: "cDecStructs.h".} = object
     results*: array[RTE_ACL_MAX_CATEGORIES, uint32]
     priority*: array[RTE_ACL_MAX_CATEGORIES, int32]
 
@@ -98,7 +99,7 @@ type
     transitions*: array[RTE_ACL_QUAD_SIZE, char] ##  boundaries for ranged node
     dfa_gr64*: array[RTE_ACL_DFA_GR64_NUM, uint8]
 
-  rte_acl_node* = object
+  rte_acl_node* {.importc: "struct rte_acl_node", header: "cDecStructs.h".} = object
     node_index*: uint64      ##  index for this node
     level*: uint32           ##  level 0-n in the trie
     ref_count*: uint32       ##  ref count for this node
@@ -119,17 +120,17 @@ type
     next*: ptr rte_acl_node     ##  free list link or pointer to duplicate node during merge
     prev*: ptr rte_acl_node     ##  points to node from which this node was duplicated
   
-  rte_acl_trie* = object
+  rte_acl_trie* {.importc: "struct rte_acl_trie", header: "cDecStructs.h".} = object
     `type`*: uint32
     count*: uint32
     root_index*: uint32
     data_index*: ptr uint32
     num_data_indexes*: uint32
 
-  rte_acl_bld_trie* = object
+  rte_acl_bld_trie* {.importc: "struct rte_acl_bld_trie", header: "cDecStructs.h".} = object
     trie*: ptr rte_acl_node
 
-  rte_acl_ctx* = object
+  rte_acl_ctx* {.importc: "struct rte_acl_ctx", header: "cDecStructs.h".} = object
     name*: array[RTE_ACL_NAMESIZE, char] ## * Name of the ACL context.
     socket_id*: int32        ## * Socket ID to allocate memory from.
     alg*: rte_acl_classify_alg
@@ -148,7 +149,7 @@ type
     mem*: pointer
     mem_sz*: csize
     config*: rte_acl_config    ##  copy of build config.
- 
+# end lib/librte_acl/acl.h 
 
 # rte_acl.nim
 proc rte_acl_create*(param: ptr rte_acl_param): ptr rte_acl_ctx {.importc, header: "rte_acl.h".}

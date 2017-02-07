@@ -1,6 +1,6 @@
 type
-  # lib/librte_kni/rte_kni.c
-  rte_kni* = object
+  # start lib/librte_kni/rte_kni.c
+  rte_kni* {.importc: "struct rte_kni", header: "rte_kni.h".} = object
     name*: array[RTE_KNI_NAMESIZE, char] ## *< KNI interface name
     group_id*: uint16        ## *< Group ID of KNI devices
     slot_id*: uint32         ## *< KNI pool slot ID
@@ -16,13 +16,14 @@ type
     sync_addr*: pointer        ## *< Req/Resp Mem address
     ops*: rte_kni_ops          ## *< operations for request
     in_use* {.bitsize: 1.}: uint8 ## *< kni in use
- 
-  rte_kni_ops* = object
+   # end lib/librte_kni/rte_kni.c
+
+  rte_kni_ops* {.importc: "struct rte_kni_ops", header: "rte_kni.h".} = object
     port_id*: uint8
     change_mtu*: proc (port_id: uint8; new_mtu: cuint): cint {.cdecl.}
     config_network_if*: proc (port_id: uint8; if_up: uint8): cint {.cdecl.}
 
-  rte_kni_conf* = object
+  rte_kni_conf* {.importc: "struct rte_kni_conf", header: "rte_kni.h".} = object
     name*: array[32, char]
     core_id*: uint32
     group_id*: uint16

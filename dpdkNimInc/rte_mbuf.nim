@@ -173,7 +173,7 @@ proc rte_mbuf_data_dma_addr_default*(mb: ptr rte_mbuf): phys_addr_t {.inline, im
 proc rte_mbuf_from_indirect*(mi: ptr rte_mbuf): ptr rte_mbuf {.inline, importc, header: "rte_mbuf.h".}
 proc rte_mbuf_to_baddr*(md: ptr rte_mbuf): cstring {.inline, importc, header: "rte_mbuf.h".}
 type
-  rte_pktmbuf_pool_private* = object
+  rte_pktmbuf_pool_private* {.importc: "struct rte_pktmbuf_pool_private", header: "rte_mbuf.h".} = object
     mbuf_data_room_size*: uint16
     mbuf_priv_size*: uint16
 

@@ -443,7 +443,24 @@ type
     tc_bws*: array[8, uint8]
     tc_queue*: rte_eth_dcb_tc_queue_mapping
 
-  rte_eth_dev_callback* = object
+  rte_eth_event_type* = enum
+    RTE_ETH_EVENT_UNKNOWN, RTE_ETH_EVENT_INTR_LSC, RTE_ETH_EVENT_QUEUE_STATE,
+    RTE_ETH_EVENT_INTR_RESET, RTE_ETH_EVENT_MAX
+  rte_eth_dev_cb_fn* = proc (port_id: uint8; event: rte_eth_event_type;
+                          cb_arg: pointer) {.cdecl.}
+
+  # start lib/librte_ether/rte_ethdev.c
+  INNER_C_STRUCT_133981217* = object
+    tqe_next*: ptr rte_eth_dev_callback
+    tqe_prev*: ptr ptr rte_eth_dev_callback
+
+  rte_eth_dev_callback* {.importc: "struct rte_eth_dev_callback", header: "cDecStructs.h".} = object
+    next*: INNER_C_STRUCT_133981217 ## *< Callbacks list
+    cb_fn*: rte_eth_dev_cb_fn  ## *< Callback address
+    cb_arg*: pointer           ## *< Parameter for callback
+    event*: rte_eth_event_type ## *< Interrupt event type
+    active*: uint32          ## *< Callback is executing
+  # end lib/librte_ether/rte_ethdev.c
   
   rte_eth_dev_cb_list* = object
     tqh_first*: ptr rte_eth_dev_callback
@@ -802,15 +819,7 @@ proc rte_eth_tx_buffer_drop_callback*(pkts: ptr ptr rte_mbuf; unsent: uint16;
                                      userdata: pointer) {.importc, header: "rte_ethdev.h".}
 proc rte_eth_tx_buffer_count_callback*(pkts: ptr ptr rte_mbuf; unsent: uint16;
                                       userdata: pointer) {.importc, header: "rte_ethdev.h".}
-type
-  rte_eth_event_type* = enum
-    RTE_ETH_EVENT_UNKNOWN, RTE_ETH_EVENT_INTR_LSC, RTE_ETH_EVENT_QUEUE_STATE,
-    RTE_ETH_EVENT_INTR_RESET, RTE_ETH_EVENT_MAX
 
-
-type
-  rte_eth_dev_cb_fn* = proc (port_id: uint8; event: rte_eth_event_type;
-                          cb_arg: pointer) {.cdecl.}
 
 proc rte_eth_dev_callback_register*(port_id: uint8; event: rte_eth_event_type;
                                    cb_fn: rte_eth_dev_cb_fn; cb_arg: pointer): cint {.importc, header: "rte_ethdev.h".}

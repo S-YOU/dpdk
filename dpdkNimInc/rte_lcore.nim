@@ -1,13 +1,13 @@
 type
   pthread_t* = culong
   cpu_mask* = culong 
-  cpu_set_t* = object 
+  cpu_set_t* {.importc: "cpu_set_t", header: "sched.h".} = object 
     bits*: array[1024 div (8 * sizeof((cpu_mask))), cpu_mask]
   rte_cpuset_t* = cpu_set_t
 
 
 type
-  lcore_config* {.importc: "struct lcore_config", header: "rte_jobstats.h".} = object
+  lcore_config* {.importc: "struct lcore_config", header: "rte_lcore.h".} = object
     detected*: cuint
     thread_id*: pthread_t
     pipe_master2slave*: array[2, cint]

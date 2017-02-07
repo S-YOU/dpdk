@@ -1,5 +1,5 @@
 type
-  rte_malloc_socket_stats* = object
+  rte_malloc_socket_stats* {.importc: "struct rte_malloc_socket_stats", header: "rte_malloc.h".} = object
     heap_totalsz_bytes*: csize
     heap_freesz_bytes*: csize
     greatest_free_size*: csize

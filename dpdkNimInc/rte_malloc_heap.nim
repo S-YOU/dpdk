@@ -9,7 +9,7 @@ type
   elem_state* = enum
     ELEM_FREE = 0, ELEM_BUSY, ELEM_PAD
 
-  malloc_elem* = object
+  malloc_elem* {.importc: "struct malloc_elem", header: "cDecStructs.h".} = object
     heap*: ptr malloc_heap
     prev*: ptr malloc_elem
     free_list*: INNER_C_STRUCT_374384622
