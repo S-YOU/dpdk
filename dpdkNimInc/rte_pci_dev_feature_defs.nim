@@ -1,5 +1,0 @@
-type
-  rte_intr_mode* = enum
-    RTE_INTR_MODE_NONE = 0, RTE_INTR_MODE_LEGACY, RTE_INTR_MODE_MSI,
-    RTE_INTR_MODE_MSIX
-
