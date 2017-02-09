@@ -6,21 +6,27 @@ Tested on Ubuntu 16.04.1 as a guest operating system (OS) using Virtualbox.
 
 ## Explanation of Directories
 
-1. dpdkNimInc - DPDK Nim include files. These are the Nim API to the C DPDK library. There is a file `dpdk.nim` which includes all necessary DPDK Nim files for your Nim DPDK project.
+1. src/dpdkNimInc - DPDK Nim include files. These are the Nim API to the C DPDK library. There is a file `dpdk.nim` which includes all necessary DPDK Nim files for your Nim DPDK project.
 
-2. rteErrorWrapper - There is a `rte_error_wrapper.nim` file in dpdkNimInc which allows Nim to get the C DPDK rte_errno variable via the procedure get_rte_errno() using the archive file rte_error_wrapper.a. This has the Nim prototype:
+2. src/rteErrorWrapper - There is a `rte_error_wrapper.nim` file in dpdkNimInc which allows Nim to get the C DPDK rte_errno variable via the procedure get_rte_errno() using the archive file rte_error_wrapper.a. This has the Nim prototype:
 
 	`proc get_rte_errno*(): cint {.importc, header: "rte_error_wrapper.h".}`
 
-3. makeDPDKNim.sh - Bash script to save you time building a Nim DPDK project. It is a copy of gcc switches used by the DPDK Makefiles.
+3. src/extraCHdrs4Nim - These are extra headers that were made to include the structs that are declared in the DPDK C files that were referenced by the DPDK header files. These are referenced by the files in `dpdkNimInc` using Nim pragmas.
 
-4. dpdkNimExamples - Example Nim versions of the DPDK helloworld and rxtx_callbacks examples. Please look here to see how to call the Nim DPDK API.
+4. makeDPDKNim.sh - Bash script to save you time building a Nim DPDK project. It is a copy of gcc switches used by the DPDK Makefiles.
 
-5. dpdkExamplesMod - Modified versions of the original DPDK C examples. This currently has the C rxtx_callbacks example modified to time the average packet latencies.
+5. examples/dpdkNimExamples - Example Nim versions of the DPDK helloworld and rxtx_callbacks examples. Please look here to see how to call the Nim DPDK API.
 
-6. extraCHdrs4Nim - These are extra headers that were made to include the structs that are declared in the DPDK C files that were referenced by the DPDK header files. These are referenced by the files in `dpdkNimInc` using Nim pragmas.
+6. examples/dpdkExamplesMod - Modified versions of the original DPDK C examples. This currently has the C rxtx_callbacks example modified to time the average packet latencies.
 
-7. logs - Currently has logs comparing the average packet latencies between the DPDK C and Nim versions of rxtx_callbacks. 
+7. dpdk.nimble - file to be used by nimble. `nimble install dpdk' will install both C DPDK and Nim bindings. `nimble uninstall dpdk` will uninstall both C DPDK and Nim bindings.
+
+8. instC_DPDK.sh - bash script used by dpdk.nimble to automatically install the C DPDK library.
+
+9. uninstC_DPDK.sh - bash script used by dpdk.nimble to automatically uninstall the C DPDK library.
+
+9. logs - Currently has logs comparing the average packet latencies between the DPDK C and Nim versions of rxtx_callbacks. 
 
 
 ## Getting started
@@ -105,20 +111,35 @@ http://dpdk.org/doc/quick-start
 ### Install DPDK on the Guest OS
 These steps should be done on the guest VM with two NIC setup.
 
-1. Download required utilities.
+1. Download required utilities and install C DPDK.
 
-  ```
-  $ sudo apt-get install libpcap-dev gcc make hugepages nim
-  $ sudo apt-get linux-headers-generic
-  ```	
+  This step will be automated by nimble.
 
-2. Download DPDK, untar and
-  ```
-  $ make config T=x86_64-native-linuxapp-gcc
-  $ sed -ri 's,(PMD_PCAP=).*,\1y,' build/.config
-  $ make -j2
-  $ sudo make install
-  ```
+  `$ nimble install dpdk`
+
+  This will install both C DPDK library and the Nim DPDK bindings.
+
+  ... but until then, please run the script
+
+  `$ ./instC_DPDK.sh`
+
+  The script will perform the following:
+
+  1. Download required utilities
+
+    ```
+    $ sudo apt-get install libpcap-dev gcc make hugepages nim
+    $ sudo apt-get linux-headers-generic
+    ```	
+
+  2. Download DPDK, untar and
+
+    ```
+    $ make config T=x86_64-native-linuxapp-gcc
+    $ sed -ri 's,(PMD_PCAP=).*,\1y,' build/.config
+    $ make -j2
+    $ sudo make install
+    ```
 
   DPDK include headers are:
   `/usr/local/include/dpdk/`
@@ -135,7 +156,11 @@ These steps should be done on the guest VM with two NIC setup.
 
 4. Enable hugepages:
 
+   ```
+   $ sudo mkdir -p /mnt/huge
+   $ sudo mount -t hugetlbfs nodev /mnt/huge
   `$ sudo sh -c 'echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
+   ```
 
   Test:
 
@@ -169,27 +194,27 @@ These steps should be done on the guest VM with two NIC setup.
   `$ ./helloworld --help`
 
 ### Using Nim DPDK Bindings
-1. Find a good directory to put dpdkNimInc eg. /usr/local/nimInc
-2. Find a good directory to put rteErrorWrapper eg. /usr/local/nimInc
-3. Find a good directory to put extraCHdrs4Nim eg. /usr/local/nimInc
-4. Open makeDPDKNim.sh in a text editor. Please make changes to three variables to indicate where you put the above two directories:
+If you installed using nimble (step 1) the bindings will be here
+
+`~/.nimble/pkgs/dpdk-0.1.0/src`
+
+1. Find a good directory to put `src` directory eg. ~/.nimble/pkgs/dpdk-0.1.0/src
+2. Open makeDPDKNim.sh in a text editor. Please make changes to `nim_src` variable to indicate where is your above directory:
 
   ```
-  # directory containing DPDK Nim include files
-  dpdk_nim_dir="/home/ubuntu/ukso/dpdk/nimdpdk/dpdkNimInc/"
-  
-  # direcotry containing rte_errno wrapper archive
-  rte_error_wrapper_dir="/home/ubuntu/ukso/dpdk/nimdpdk/rteErrorWrapper"
-  
-  # directory for C structs referenced by DPDK (used by files in dpdk_nim_dir)
-  extra_c_hdrs_4_nim_dir="/home/ubuntu/ukso/dpdk/nimdpdk/extraCHdrs4Nim"
+  # directory containing the DPDK Nim directories dpdkNimInc, rteErrorWrapper and extraCHdrs4Nim
+  nim_src="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0/src"
   
   # gcc Debugging flags for easier development, leave blank for production
   debug_flags="-g3 -g"
 
   ```
+3. Allow Easy Access to makeDPDKNim.sh
+  You can leave `makeDPDKNim.sh` where it is or if you prefer allow global access to `makeDPDKNim.sh` by putting a copy or symlink in PATH directory eg. `/usr/local/bin/` or exporting it in `~/.bashrc`
 
-  You can leave `makeDPDKNim.sh` where it is or if you prefer allow global access to `makeDPDKNim.sh` by putting a copy or symlink in PATH directory eg. `/usr/local/bin/`.
+  export PATH="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0:$PATH"
+
+  Exit your shell and restart to source changes.
 
 ### How to Build Nim Examples
 The Nim examples uses the Nim DPDK bindings.
@@ -197,7 +222,7 @@ The Nim examples uses the Nim DPDK bindings.
 #### Nim DPDK helloworld
 1. Change to the DPDK helloworld example.
 
-  `$ cd /path/to/dpdkNimExamples/helloworld`
+  `$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/helloworld`
 
 2. Invoke the makeDPDKNim.sh build script.
 
@@ -226,7 +251,7 @@ The Nim examples uses the Nim DPDK bindings.
 
 #### Nim DPDK rxtx_callbacks
 ```
-$ cd /path/to/dpdkNimExamples/rxtx_callbacks
+$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/rxtx_callbacks
 $ makeDPDKNim.sh rxtx_callbacks.nim
 $ sudo ./rxtx_callbacks -c 1 -n 1 --vdev=eth_pcap0,iface=enp0s3 --vdev=eth_pcap1,iface=enp0s8
 EAL: Detected 2 lcore(s)
@@ -265,3 +290,12 @@ As for the warning during compilation.
 I am not sure how to get rid of this.
 
 Enjoy!
+
+### Uninstalling C DPDK and Nim DPDK
+  Easiest way is to use nimble
+
+  `$ nimble uninstall dpdk`
+
+  This will uninstall both C DPDK and Nim DPDK bindings.
+
+  The script `./uninstC_DPDK.sh` will uninstall the C DPDK library.
