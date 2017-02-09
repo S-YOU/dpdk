@@ -1,0 +1,46 @@
+ l = 340651264, 999248
+ l = 340660064, 999280
+ l = 340669472, 999312
+ l = 340678272, 999344
+ l = 340687392, 999376
+ l = 340698656, 999408
+ l = 340708064, 999440
+ l = 340716864, 999472
+ l = 340725984, 999504
+ l = 340734816, 999536
+ l = 340744832, 999568
+ l = 340753664, 999600
+ l = 340762784, 999632
+ l = 340773120, 999664
+ l = 340783456, 999696
+ l = 340791968, 999728
+ l = 340805632, 999760
+ l = 340817184, 999792
+ l = 340826304, 999824
+ l = 340835104, 999856
+ l = 340843328, 999888
+ l = 340859744, 999920
+ l = 340869792, 999952
+ l = 340879200, 999984
+ l = 340888320, 1000016
+
+average latency = 340 cycles
+Time elapsed: 32.273 s
+
+average latency = 323 cycles
+Time elapsed: 30.717 s
+DDDDDDDDD
+average latency = 376 cycles
+Time elapsed: 30.572 s
+
+average latency = 323 cycles
+Time elapsed: 30.163 s
+
+average latency = 320 cycles
+Time elapsed: 29.940 s
+
+average latency = 326 cycles
+Time elapsed: 30.623 s
+
+average latency = 375 cycles
+Time elapsed: 30.258 s

@@ -1,0 +1,329 @@
+const
+  RTE_EXEC_ENV* = "linuxapp"
+
+const
+  RTE_ARCH* = "x86_64"
+
+const
+  RTE_MACHINE* = "native"
+
+const
+  RTE_TOOLCHAIN* = "gcc"
+
+const
+  RTE_NEXT_ABI* = 1
+
+const
+  RTE_CACHE_LINE_SIZE* = 64
+
+const
+  RTE_LIBRTE_EAL* = 1
+
+const
+  RTE_MAX_LCORE* = 128
+
+const
+  RTE_MAX_NUMA_NODES* = 8
+
+const
+  RTE_MAX_MEMSEG* = 256
+
+const
+  RTE_MAX_MEMZONE* = 2560
+
+const
+  RTE_MAX_TAILQ* = 32
+
+const
+  RTE_LOG_LEVEL* = RTE_LOG_INFO
+
+const
+  RTE_LOG_HISTORY* = 256
+
+const
+  RTE_EAL_IGB_UIO* = 1
+
+const
+  RTE_EAL_VFIO* = 1
+
+const
+  RTE_EAL_PMD_PATH* = ""
+
+const
+  RTE_LIBRTE_EAL_VMWARE_TSC_MAP_SUPPORT* = 1
+
+const
+  RTE_LIBRTE_KVARGS* = 1
+
+const
+  RTE_LIBRTE_ETHER* = 1
+
+const
+  RTE_MAX_ETHPORTS* = 32
+
+const
+  RTE_MAX_QUEUES_PER_PORT* = 1024
+
+const
+  RTE_ETHDEV_QUEUE_STAT_CNTRS* = 16
+
+const
+  RTE_ETHDEV_RXTX_CALLBACKS* = 1
+
+const
+  RTE_LIBRTE_ENA_PMD* = 1
+
+const
+  RTE_LIBRTE_EM_PMD* = 1
+
+const
+  RTE_LIBRTE_IGB_PMD* = 1
+
+const
+  RTE_LIBRTE_IXGBE_PMD* = 1
+
+const
+  RTE_IXGBE_INC_VECTOR* = 1
+
+const
+  RTE_IXGBE_RX_OLFLAGS_ENABLE* = 1
+
+const
+  RTE_LIBRTE_I40E_PMD* = 1
+
+const
+  RTE_LIBRTE_I40E_RX_ALLOW_BULK_ALLOC* = 1
+
+const
+  RTE_LIBRTE_I40E_INC_VECTOR* = 1
+
+const
+  RTE_LIBRTE_I40E_RX_OLFLAGS_ENABLE* = 1
+
+const
+  RTE_LIBRTE_I40E_QUEUE_NUM_PER_PF* = 64
+
+const
+  RTE_LIBRTE_I40E_QUEUE_NUM_PER_VF* = 4
+
+const
+  RTE_LIBRTE_I40E_QUEUE_NUM_PER_VM* = 4
+
+const
+  RTE_LIBRTE_I40E_ITR_INTERVAL* = - 1
+
+const
+  RTE_LIBRTE_FM10K_PMD* = 1
+
+const
+  RTE_LIBRTE_FM10K_RX_OLFLAGS_ENABLE* = 1
+
+const
+  RTE_LIBRTE_FM10K_INC_VECTOR* = 1
+
+const
+  RTE_LIBRTE_MLX4_SGE_WR_N* = 4
+
+const
+  RTE_LIBRTE_MLX4_MAX_INLINE* = 0
+
+const
+  RTE_LIBRTE_MLX4_TX_MP_CACHE* = 8
+
+const
+  RTE_LIBRTE_MLX4_SOFT_COUNTERS* = 1
+
+const
+  RTE_LIBRTE_MLX5_TX_MP_CACHE* = 8
+
+const
+  RTE_LIBRTE_CXGBE_PMD* = 1
+
+const
+  RTE_LIBRTE_ENIC_PMD* = 1
+
+const
+  RTE_LIBRTE_BNXT_PMD* = 1
+
+const
+  RTE_LIBRTE_PMD_SZEDATA2_AS* = 0
+
+const
+  RTE_LIBRTE_VIRTIO_PMD* = 1
+
+const
+  RTE_VIRTIO_USER* = 1
+
+const
+  RTE_LIBRTE_VMXNET3_PMD* = 1
+
+const
+  RTE_LIBRTE_PMD_RING* = 1
+
+const
+  RTE_PMD_RING_MAX_RX_RINGS* = 16
+
+const
+  RTE_PMD_RING_MAX_TX_RINGS* = 16
+
+const
+  RTE_LIBRTE_PMD_PCAP* = 1
+
+const
+  RTE_LIBRTE_PMD_BOND* = 1
+
+const
+  RTE_LIBRTE_QEDE_FW* = ""
+
+const
+  RTE_LIBRTE_PMD_AF_PACKET* = 1
+
+const
+  RTE_LIBRTE_PMD_NULL* = 1
+
+const
+  RTE_PMD_PACKET_PREFETCH* = 1
+
+const
+  RTE_LIBRTE_CRYPTODEV* = 1
+
+const
+  RTE_CRYPTO_MAX_DEVS* = 64
+
+const
+  RTE_CRYPTODEV_NAME_LEN* = 64
+
+const
+  RTE_QAT_PMD_MAX_NB_SESSIONS* = 2048
+
+const
+  RTE_LIBRTE_PMD_NULL_CRYPTO* = 1
+
+const
+  RTE_LIBRTE_RING* = 1
+
+const
+  RTE_RING_PAUSE_REP_COUNT* = 0
+
+const
+  RTE_LIBRTE_MEMPOOL* = 1
+
+const
+  RTE_MEMPOOL_CACHE_MAX_SIZE* = 512
+
+const
+  RTE_LIBRTE_MBUF* = 1
+
+const
+  RTE_MBUF_DEFAULT_MEMPOOL_OPS* = "ring_mp_mc"
+
+const
+  RTE_MBUF_REFCNT_ATOMIC* = 1
+
+const
+  RTE_PKTMBUF_HEADROOM* = 128
+
+const
+  RTE_LIBRTE_TIMER* = 1
+
+const
+  RTE_LIBRTE_CFGFILE* = 1
+
+const
+  RTE_LIBRTE_CMDLINE* = 1
+
+const
+  RTE_LIBRTE_HASH* = 1
+
+const
+  RTE_LIBRTE_JOBSTATS* = 1
+
+const
+  RTE_LIBRTE_LPM* = 1
+
+const
+  RTE_LIBRTE_ACL* = 1
+
+const
+  RTE_LIBRTE_POWER* = 1
+
+const
+  RTE_MAX_LCORE_FREQS* = 64
+
+const
+  RTE_LIBRTE_NET* = 1
+
+const
+  RTE_LIBRTE_IP_FRAG* = 1
+
+const
+  RTE_LIBRTE_IP_FRAG_MAX_FRAG* = 4
+
+const
+  RTE_LIBRTE_METER* = 1
+
+const
+  RTE_LIBRTE_SCHED* = 1
+
+const
+  RTE_SCHED_PORT_N_GRINDERS* = 8
+
+const
+  RTE_LIBRTE_DISTRIBUTOR* = 1
+
+const
+  RTE_LIBRTE_REORDER* = 1
+
+const
+  RTE_LIBRTE_PORT* = 1
+
+const
+  RTE_LIBRTE_TABLE* = 1
+
+const
+  RTE_LIBRTE_PIPELINE* = 1
+
+const
+  RTE_LIBRTE_KNI* = 1
+
+const
+  RTE_KNI_KMOD* = 1
+
+const
+  RTE_KNI_PREEMPT_DEFAULT* = 1
+
+const
+  RTE_KNI_VHOST_MAX_CACHE_SIZE* = 1024
+
+const
+  RTE_LIBRTE_PDUMP* = 1
+
+const
+  RTE_LIBRTE_VHOST* = 1
+
+const
+  RTE_LIBRTE_VHOST_USER* = 1
+
+const
+  RTE_LIBRTE_PMD_VHOST* = 1
+
+const
+  RTE_APP_TEST* = 1
+
+const
+  RTE_TEST_PMD* = 1
+
+const
+  RTE_EXEC_ENV_LINUXAPP* = 1
+
+const
+  RTE_ARCH_X86_64* = 1
+
+const
+  RTE_ARCH_X86* = 1
+
+const
+  RTE_ARCH_64* = 1
+
+const
+  RTE_TOOLCHAIN_GCC* = 1
