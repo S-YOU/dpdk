@@ -1,0 +1,5 @@
+const
+  RTE_INTR_MODE_NONE_NAME* = "none"
+  RTE_INTR_MODE_LEGACY_NAME* = "legacy"
+  RTE_INTR_MODE_MSI_NAME* = "msi"
+  RTE_INTR_MODE_MSIX_NAME* = "msix"
