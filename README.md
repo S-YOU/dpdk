@@ -42,228 +42,228 @@ http://plvision.eu/blog/deploying-intel-dpdk-in-oracle-VirtualBox/
 
 http://dpdk.org/doc/quick-start
 
-1. Check for hardware virtualization on host OS.
+  1. Check for hardware virtualization on host OS.
 
-	Intel VT-x
+    Intel VT-x
 
-	`$ grep vmx /proc/cpuinfo`
+    `$ grep vmx /proc/cpuinfo`
 
-	AMD SVM
+    AMD SVM
 
-	`$ grep svm /proc/cpuinfo`
+    `$ grep svm /proc/cpuinfo`
 
-	If you don't see any output, you need to enable them through the BIOS.
+    If you don't see any output, you need to enable them through the BIOS.
 
-	[ref: https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/]
+    [ref: https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/]
 
-2. Check for CPU SSE flags (SSE 4.1 / SSE 4.2) on host
+  2. Check for CPU SSE flags (SSE 4.1 / SSE 4.2) on host
 
-	`$ grep sse4 /proc/cpuinfo`
+    `$ grep sse4 /proc/cpuinfo`
 
-	If you don't see any output, you need to find out how to turn them on for your host OS.
+    If you don't see any output, you need to find out how to turn them on for your host OS.
 
-3. Find out your host's OS NIC name (tested to work with wired Ethernet).
+  3. Find out your host's OS NIC name (tested to work with wired Ethernet).
 
-	```
-	$ ip addr
-	2: enp0s25
-	[ output ommitted ]
-	```
-4. Install VirtualBox.
-5. Install Ubuntu as guest OS in VirtualBox.
-6. In VirtualBox enable two bridged NIC in the Ubuntu virtual machine (VM). Bridge to your host's NIC (eg. enp0s25). To do this goto:
+    ```
+    $ ip addr
+    2: enp0s25
+    [ output ommitted ]
+    ```
+  4. Install VirtualBox.
+  5. Install Ubuntu as guest OS in VirtualBox.
+  6. In VirtualBox enable two bridged NIC in the Ubuntu virtual machine (VM). Bridge to your host's NIC (eg. enp0s25). To do this goto:
 
-	```
-  Settings > Network > Adapter 1 > 
-    Attached to: Bridged Adapter
-    Name: enp0s25
-    Adaptor Type: Intel Pro/1000 MT Desktop (82540EM)
-	```
+    ```
+    Settings > Network > Adapter 1 > 
+      Attached to: Bridged Adapter
+      Name: enp0s25
+      Adaptor Type: Intel Pro/1000 MT Desktop (82540EM)
+    ```
 
-	Create a second NIC using Adapter 2 and use the same settings as for the first NIC:
+    Create a second NIC using Adapter 2 and use the same settings as for the first NIC:
 
-	```
-  Settings > Network > Adapter 2 > 
-    Attached to: Bridged Adapter
-    Name: enp0s25
-    Adaptor Type: Intel Pro/1000 MT Desktop (82540EM)
-	```
+    ```
+    Settings > Network > Adapter 2 > 
+      Attached to: Bridged Adapter
+      Name: enp0s25
+      Adaptor Type: Intel Pro/1000 MT Desktop (82540EM)
+    ```
 
-7. Enable SSE CPU flags for the guest VM. Shutdown the guest VM then on the host issue: 
+  7. Enable SSE CPU flags for the guest VM. Shutdown the guest VM then on the host issue: 
 
-	`$ VBoxManage setextradata "ubt1604" VBoxInternal/CPUM/SSE4.1 1`
-	
-	To test:
-	
-	`$ VBoxManage getextradata "ubt1604" VBoxInternal/CPUM/SSE4.1`
-	
-	Restart the guest VM
+    `$ VBoxManage setextradata "ubt1604" VBoxInternal/CPUM/SSE4.1 1`
+    
+    To test:
+    
+    `$ VBoxManage getextradata "ubt1604" VBoxInternal/CPUM/SSE4.1`
+    
+    Restart the guest VM
 
-8. In the virtual machine make sure your environment has two Ethernet devices. 
+  8. In the virtual machine make sure your environment has two Ethernet devices. 
 
-  ```
-  $ ip addr
-  2: enp0s3: 
-    [ more output ommitted ]
-  3: enp0s8: 
-    [ more output ommitted ]
-  ```
+    ```
+    $ ip addr
+    2: enp0s3: 
+      [ more output ommitted ]
+    3: enp0s8: 
+      [ more output ommitted ]
+    ```
 ### Install DPDK on the Guest OS
 These steps should be done on the guest VM with two NIC setup.
 
-1. Download required utilities and install C DPDK.
+  1. Download required utilities and install C DPDK.
 
-  This step will be automated by nimble.
+    This step will be automated by nimble.
 
-  `$ nimble install dpdk`
+    `$ nimble install dpdk`
 
-  This will install both C DPDK library and the Nim DPDK bindings.
+    This will install both C DPDK library and the Nim DPDK bindings.
 
-  If you want to know what nimble does please read below, otherwise please skip to part 2. 
+    If you want to know what nimble does please read below, otherwise please skip to part 2. 
 
-  nimble will invoke this:
+    nimble will invoke this:
 
-  `$ ./instC_DPDK.sh`
+    `$ ./instC_DPDK.sh`
 
-  The script will perform the following:
+    The script will perform the following:
 
-  1. Download required utilities
+    1. Download required utilities
+
+      ```
+      $ sudo apt-get install libpcap-dev gcc make hugepages nim
+      $ sudo apt-get linux-headers-generic
+      ```	
+
+    2. Download DPDK, untar and
+
+      ```
+      $ make config T=x86_64-native-linuxapp-gcc
+      $ sed -ri 's,(PMD_PCAP=).*,\1y,' build/.config
+      $ make -j2
+      $ sudo make install
+      ```
+
+    DPDK include headers are:
+    `/usr/local/include/dpdk/`
+
+    DPDK Examples are:
+    `/usr/local/share/dpdk/Examples`
+
+  2. Export environment variables to `~/.bashrc`
+    ```
+    export RTE_SDK=/usr/local/share/dpdk/
+    export RTE_TARGET=x86_64-native-linuxapp-gcc
+    ```
+    Exit your shell and restart to source changes.
+
+  3. Enable hugepages:
+
+     ```
+     $ sudo mkdir -p /mnt/huge
+     $ sudo mount -t hugetlbfs nodev /mnt/huge
+    `$ sudo sh -c 'echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
+     ```
+
+    Test:
+
+    `$ cat /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
+
+  4. Test with a DPDK example:
 
     ```
-    $ sudo apt-get install libpcap-dev gcc make hugepages nim
-    $ sudo apt-get linux-headers-generic
-    ```	
-
-  2. Download DPDK, untar and
-
+    $ mkdir ~/helloworld
+    $ cp -r /usr/local/share/dpdk/examples/helloworld/* ~/helloworld
+    $ cd ~/helloworld
+    $ make 
     ```
-    $ make config T=x86_64-native-linuxapp-gcc
-    $ sed -ri 's,(PMD_PCAP=).*,\1y,' build/.config
-    $ make -j2
-    $ sudo make install
+    Can use the -j switch to make to invoke multicore use.
     ```
-
-  DPDK include headers are:
-  `/usr/local/include/dpdk/`
-
-  DPDK Examples are:
-  `/usr/local/share/dpdk/Examples`
-
-2. Export environment variables to `~/.bashrc`
-  ```
-  export RTE_SDK=/usr/local/share/dpdk/
-  export RTE_TARGET=x86_64-native-linuxapp-gcc
-  ```
-  Exit your shell and restart to source changes.
-
-3. Enable hugepages:
-
-   ```
-   $ sudo mkdir -p /mnt/huge
-   $ sudo mount -t hugetlbfs nodev /mnt/huge
-  `$ sudo sh -c 'echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
-   ```
-
-  Test:
-
-  `$ cat /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
-
-4. Test with a DPDK example:
-
-  ```
-  $ mkdir ~/helloworld
-  $ cp -r /usr/local/share/dpdk/examples/helloworld/* ~/helloworld
-  $ cd ~/helloworld
-  $ make 
-  ```
-  Can use the -j switch to make to invoke multicore use.
-  ```
-  $ cd build
-  $ sudo ./helloworld -c 3 -n 1
-  [sudo] password for ubuntu:
-  EAL: Detected 2 lcore(s)
-  EAL: Probing VFIO support...
-  EAL: WARNING: cpu flags constant_tsc=yes nonstop_tsc=no -> using unreliable clock cycles !
-  PMD: bnxt_rte_pmd_init() called for (null)
-  EAL: PCI device 0000:00:03.0 on NUMA socket -1
-  EAL:   probe driver: 8086:100e rte_em_pmd
-  EAL: PCI device 0000:00:08.0 on NUMA socket -1
-  EAL:   probe driver: 8086:100e rte_em_pmd
-  hello from core 1
-  hello from core 0
-  ```
-  To see the switches help, use:
-  `$ ./helloworld --help`
+    $ cd build
+    $ sudo ./helloworld -c 3 -n 1
+    [sudo] password for ubuntu:
+    EAL: Detected 2 lcore(s)
+    EAL: Probing VFIO support...
+    EAL: WARNING: cpu flags constant_tsc=yes nonstop_tsc=no -> using unreliable clock cycles !
+    PMD: bnxt_rte_pmd_init() called for (null)
+    EAL: PCI device 0000:00:03.0 on NUMA socket -1
+    EAL:   probe driver: 8086:100e rte_em_pmd
+    EAL: PCI device 0000:00:08.0 on NUMA socket -1
+    EAL:   probe driver: 8086:100e rte_em_pmd
+    hello from core 1
+    hello from core 0
+    ```
+    To see the switches help, use:
+    `$ ./helloworld --help`
 
 ### Using Nim DPDK Bindings
 If you installed using nimble (step 1) the bindings will be here
 
 `~/.nimble/pkgs/dpdk-0.1.0/src`
 
-1. Find a good directory to put `src` directory eg. ~/.nimble/pkgs/dpdk-0.1.0/src
-2. Open makeDPDKNim.sh in a text editor. Please make changes to `nim_src` variable to indicate where is your above directory:
-3. For release builds, set -O3 to gcc and -d:release flags to Nim.
+  1. Find a good directory to put `src` directory eg. ~/.nimble/pkgs/dpdk-0.1.0/src
+  2. Open makeDPDKNim.sh in a text editor. Please make changes to `nim_src` variable to indicate where is your above directory:
+  3. For release builds, set -O3 to gcc and -d:release flags to Nim.
 
-  ```
-  # User configurable variables start
-  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  
-  # directory containing the DPDK Nim directories dpdkNimInc, rteErrorWrapper and extraCHdrs4Nim
-    nim_src="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0/src"
-  
-  # gcc Debugging flags for easier development, leave blank for production or use -O3
-  # For development set "-g3 -g"
-  # For release set     "-O3"
-    debug_flags="-O3" # release
-  
-  # Nim flags
-  # For development set ""
-  # for release set     "-d:release"
-    nim_flags="-d:release" 
-  
-  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # User configurable paths end
+    ```
+    # User configurable variables start
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    # directory containing the DPDK Nim directories dpdkNimInc, rteErrorWrapper and extraCHdrs4Nim
+      nim_src="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0/src"
+    
+    # gcc Debugging flags for easier development, leave blank for production or use -O3
+    # For development set "-g3 -g"
+    # For release set     "-O3"
+      debug_flags="-O3" # release
+    
+    # Nim flags
+    # For development set ""
+    # for release set     "-d:release"
+      nim_flags="-d:release" 
+    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # User configurable paths end
 
-  ```
-3. Allow Easy Access to makeDPDKNim.sh
-  You can leave `makeDPDKNim.sh` where it is or if you prefer allow global access to `makeDPDKNim.sh` by putting a copy or symlink in PATH directory eg. `/usr/local/bin/` or exporting it in `~/.bashrc`
+    ```
+  3. Allow Easy Access to makeDPDKNim.sh
+    You can leave `makeDPDKNim.sh` where it is or if you prefer allow global access to `makeDPDKNim.sh` by putting a copy or symlink in PATH directory eg. `/usr/local/bin/` or exporting it in `~/.bashrc`
 
-  export PATH="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0:$PATH"
+    export PATH="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0:$PATH"
 
-  Exit your shell and restart to source changes.
+    Exit your shell and restart to source changes.
 
 ### How to Build Nim Examples
 The Nim examples uses the Nim DPDK bindings.
 
 #### Nim DPDK helloworld
-1. Change to the DPDK helloworld example.
+  1. Change to the DPDK helloworld example.
 
-  `$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/helloworld`
+    `$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/helloworld`
 
-2. Invoke the makeDPDKNim.sh build script.
+  2. Invoke the makeDPDKNim.sh build script.
 
-  `$ makeDPDKNim.sh helloworld.nim`
+    `$ makeDPDKNim.sh helloworld.nim`
 
-  If makeDPDKNim.sh was not copied to a globally accessible PATH directory, you need to invoke it using it's absolute path.
+    If makeDPDKNim.sh was not copied to a globally accessible PATH directory, you need to invoke it using it's absolute path.
 
-3. Test:
-  ```
-  $ sudo ./helloworld -c 3 -n 1 
-  [sudo] password for ubuntu: 
-  EAL: Detected 2 lcore(s)
-  EAL: Probing VFIO support...
-  EAL: WARNING: cpu flags constant_tsc=yes nonstop_tsc=no -> using unreliable clock cycles !
-  PMD: bnxt_rte_pmd_init() called for (null)
-  EAL: PCI device 0000:00:03.0 on NUMA socket -1
-  EAL:   probe driver: 8086:100e rte_em_pmd
-  EAL: PCI device 0000:00:08.0 on NUMA socket -1
-  EAL:   probe driver: 8086:100e rte_em_pmd
-  rte_eal_init() ok
-  hello from core 1
-  hello from core 0
-  rte_eal_mp_remote_launch() ok
-  hello from core 0
-  ```
+  3. Test:
+    ```
+    $ sudo ./helloworld -c 3 -n 1 
+    [sudo] password for ubuntu: 
+    EAL: Detected 2 lcore(s)
+    EAL: Probing VFIO support...
+    EAL: WARNING: cpu flags constant_tsc=yes nonstop_tsc=no -> using unreliable clock cycles !
+    PMD: bnxt_rte_pmd_init() called for (null)
+    EAL: PCI device 0000:00:03.0 on NUMA socket -1
+    EAL:   probe driver: 8086:100e rte_em_pmd
+    EAL: PCI device 0000:00:08.0 on NUMA socket -1
+    EAL:   probe driver: 8086:100e rte_em_pmd
+    rte_eal_init() ok
+    hello from core 1
+    hello from core 0
+    rte_eal_mp_remote_launch() ok
+    hello from core 0
+    ```
 
 #### Nim DPDK rxtx_callbacks
 ```
@@ -308,13 +308,13 @@ I am not sure how to get rid of this.
 Enjoy!
 
 ### Uninstalling C DPDK and Nim DPDK
-  Easiest way is to use nimble
+Easiest way is to use nimble
 
-  `$ nimble uninstall dpdk`
+`$ nimble uninstall dpdk`
 
-  This will uninstall both C DPDK and Nim DPDK bindings.
+This will uninstall both C DPDK and Nim DPDK bindings.
 
-  The script `./uninstC_DPDK.sh` will uninstall the C DPDK library.
+The script `./uninstC_DPDK.sh` will uninstall the C DPDK library.
 
 
 
