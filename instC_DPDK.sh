@@ -70,7 +70,7 @@ else
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e "\n$cmd"; eval $f_cmd
 
-  echo "dpdk-stable-16.07.2 has been installed here:\n"
+  echo -e "dpdk-stable-16.07.2 has been installed here:\n"
   echo -e "\t$dir1\n\t$dir2\n"
 
 fi

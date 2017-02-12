@@ -5,22 +5,30 @@
 # User configurable variables start
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# directory containing DPDK Nim include files
-dpdk_nim_dir="/home/ubuntu/ukso/dpdk/nimdpdk/dpdkNimInc/"
+# directory containing the DPDK Nim directories dpdkNimInc, rteErrorWrapper and extraCHdrs4Nim
+nim_src="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0/src"
 
-# direcotry containing rte_errno wrapper archive
-rte_error_wrapper_dir="/home/ubuntu/ukso/dpdk/nimdpdk/rteErrorWrapper"
+# gcc Debugging flags for easier development, leave blank for production or use -O3
+# For development set "-g3 -g"
+# For release set     "-O3"
+debug_flags="-O3" # release
 
-# directory for C structs referenced by DPDK (used by files in dpdk_nim_dir)
-extra_c_hdrs_4_nim_dir="/home/ubuntu/ukso/dpdk/nimdpdk/extraCHdrs4Nim"
-
-# gcc Debugging flags for easier development, leave blank for production
-debug_flags="-g3 -g"
+# Nim flags
+# For development set ""
+# for release set     "-d:release"
+nim_flags="-d:release" 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # User configurable paths end
 
+# directory containing DPDK Nim include files
+dpdk_nim_dir="$nim_src/dpdkNimInc/"
 
+# direcotry containing rte_errno wrapper archive
+rte_error_wrapper_dir="$nim_src/rteErrorWrapper"
+
+# directory for C structs referenced by DPDK (used by files in dpdk_nim_dir)
+extra_c_hdrs_4_nim_dir="$nim_src/extraCHdrs4Nim"
 
 dpdk_nim_path="--path:$dpdk_nim_dir"
 rte_error_compile_options="--cincludes:$rte_error_wrapper_dir" 
@@ -42,7 +50,7 @@ msg="Dear user, please edit dpdk_nim_dir, rte_error_wrapper_dir extra_c_hdrs_4_n
 
 function dpdkNimCompile() {
   nim_files=$@
-  cmd="nim c $dpdk_nim_path $rte_error_compile_options $extra_includes --passC:\"$c_compiler_options\" --passL:\"$linker_options\" $nim_files"
+  cmd="nim $nim_flags c $dpdk_nim_path $rte_error_compile_options $extra_includes --passC:\"$c_compiler_options\" --passL:\"$linker_options\" $nim_files"
   echo $cmd
   eval $cmd
 }

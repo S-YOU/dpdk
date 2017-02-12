@@ -119,7 +119,9 @@ These steps should be done on the guest VM with two NIC setup.
 
   This will install both C DPDK library and the Nim DPDK bindings.
 
-  ... but until then, please run the script
+  If you want to know what nimble does please read below, otherwise please skip to part 2. 
+
+  nimble will invoke this:
 
   `$ ./instC_DPDK.sh`
 
@@ -147,14 +149,14 @@ These steps should be done on the guest VM with two NIC setup.
   DPDK Examples are:
   `/usr/local/share/dpdk/Examples`
 
-3. Export environment variables to `~/.bashrc`
+2. Export environment variables to `~/.bashrc`
   ```
   export RTE_SDK=/usr/local/share/dpdk/
   export RTE_TARGET=x86_64-native-linuxapp-gcc
   ```
   Exit your shell and restart to source changes.
 
-4. Enable hugepages:
+3. Enable hugepages:
 
    ```
    $ sudo mkdir -p /mnt/huge
@@ -166,7 +168,7 @@ These steps should be done on the guest VM with two NIC setup.
 
   `$ cat /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
 
-5. Test with a DPDK example:
+4. Test with a DPDK example:
 
   ```
   $ mkdir ~/helloworld
@@ -200,13 +202,27 @@ If you installed using nimble (step 1) the bindings will be here
 
 1. Find a good directory to put `src` directory eg. ~/.nimble/pkgs/dpdk-0.1.0/src
 2. Open makeDPDKNim.sh in a text editor. Please make changes to `nim_src` variable to indicate where is your above directory:
+3. For release builds, set -O3 to gcc and -d:release flags to Nim.
 
   ```
-  # directory containing the DPDK Nim directories dpdkNimInc, rteErrorWrapper and extraCHdrs4Nim
-  nim_src="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0/src"
+  # User configurable variables start
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   
-  # gcc Debugging flags for easier development, leave blank for production
-  debug_flags="-g3 -g"
+  # directory containing the DPDK Nim directories dpdkNimInc, rteErrorWrapper and extraCHdrs4Nim
+    nim_src="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0/src"
+  
+  # gcc Debugging flags for easier development, leave blank for production or use -O3
+  # For development set "-g3 -g"
+  # For release set     "-O3"
+    debug_flags="-O3" # release
+  
+  # Nim flags
+  # For development set ""
+  # for release set     "-d:release"
+    nim_flags="-d:release" 
+  
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # User configurable paths end
 
   ```
 3. Allow Easy Access to makeDPDKNim.sh
@@ -299,3 +315,6 @@ Enjoy!
   This will uninstall both C DPDK and Nim DPDK bindings.
 
   The script `./uninstC_DPDK.sh` will uninstall the C DPDK library.
+
+
+
