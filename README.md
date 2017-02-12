@@ -119,7 +119,7 @@ These steps should be done on the guest VM with two NIC setup.
 
     This will install both C DPDK library and the Nim DPDK bindings.
 
-    If you want to know what nimble does please read below, otherwise please skip to part 2. 
+    If you want to know what nimble does please read below, otherwise please skip to the next step (Export environment variables). 
 
     nimble will invoke this:
 
