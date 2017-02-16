@@ -9,7 +9,7 @@ license       = "Apache"
 
 requires "nim >= 0.16.0"
 
-skipDirs = @["logs"]
+skipDirs = @["logs", "dpdk-stable-16.07.2"]
 
 skipFiles = @["dpdk-16.07.2.tar.xz", "instC_DPDK.sh", "uninstC_DPDK.sh"]
 

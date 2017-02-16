@@ -6,19 +6,19 @@ Tested on Ubuntu 16.04.1 as a guest operating system (OS) using Virtualbox.
 
 ## Explanation of Directories
 
-1. src/dpdkNimInc - DPDK Nim include files. These are the Nim API to the C DPDK library. There is a file `dpdk.nim` which includes all necessary DPDK Nim files for your Nim DPDK project.
+1. dpdk - DPDK Nim include files. These are the Nim API to the C DPDK library. 
 
-2. src/rteErrorWrapper - There is a `rte_error_wrapper.nim` file in dpdkNimInc which allows Nim to get the C DPDK rte_errno variable via the procedure get_rte_errno() using the archive file rte_error_wrapper.a. This has the Nim prototype:
+2. rteErrorWrapper - There is a `rte_error_wrapper.nim` file which allows Nim to get the C DPDK rte_errno variable via the procedure get_rte_errno() using the archive file rte_error_wrapper.a. This has the Nim prototype:
 
 	`proc get_rte_errno*(): cint {.importc, header: "rte_error_wrapper.h".}`
 
-3. src/extraCHdrs4Nim - These are extra headers that were made to include the structs that are declared in the DPDK C files that were referenced by the DPDK header files. These are referenced by the files in `dpdkNimInc` using Nim pragmas.
+3. extraHdrs/cDecStructs.h - These are extra headers that were made to include the structs that are declared in the DPDK C files that were referenced by the DPDK header files. These are referenced by the files in `dpdk` using Nim pragmas.
 
-4. makeDPDKNim.sh - Bash script to save you time building a Nim DPDK project. It is a copy of gcc switches used by the DPDK Makefiles.
+4. makeDPDKNim.sh - Bash script to save you time building a Nim DPDK project. It is a copy of gcc switches used by the DPDK Makefiles plus some extras.
 
-5. examples/dpdkNimExamples - Example Nim versions of the DPDK helloworld and rxtx_callbacks examples. Please look here to see how to call the Nim DPDK API.
+5. examples/examples - Example Nim versions of the DPDK helloworld and rxtx_callbacks examples. Please look here to see how to call the Nim DPDK API.
 
-6. examples/dpdkExamplesMod - Modified versions of the original DPDK C examples. This currently has the C rxtx_callbacks example modified to time the average packet latencies.
+6. examples/C_Examples - Modified versions of the original DPDK C examples. This currently has the C rxtx_callbacks example modified to time the average packet latencies.
 
 7. dpdk.nimble - file to be used by nimble. `nimble install dpdk' will install both C DPDK and Nim bindings. `nimble uninstall dpdk` will uninstall both C DPDK and Nim bindings.
 
@@ -26,8 +26,9 @@ Tested on Ubuntu 16.04.1 as a guest operating system (OS) using Virtualbox.
 
 9. uninstC_DPDK.sh - bash script used by dpdk.nimble to automatically uninstall the C DPDK library.
 
-9. logs - Currently has logs comparing the average packet latencies between the DPDK C and Nim versions of rxtx_callbacks. 
+10. logs - Currently has logs comparing the average packet latencies between the DPDK C and Nim versions of rxtx_callbacks. 
 
+11. tests - to test if extraHdrs/cDecStructs.h can be used by Nim.
 
 ## Getting started
 
@@ -108,6 +109,8 @@ http://dpdk.org/doc/quick-start
     3: enp0s8: 
       [ more output ommitted ]
     ```
+
+
 ### Install DPDK on the Guest OS
 These steps should be done on the guest VM with two NIC setup.
 
@@ -196,39 +199,31 @@ These steps should be done on the guest VM with two NIC setup.
     `$ ./helloworld --help`
 
 ### Using Nim DPDK Bindings
-If you installed using nimble (step 1) the bindings will be here
-
-`~/.nimble/pkgs/dpdk-0.1.0/src`
-
-  1. Find a good directory to put `src` directory eg. ~/.nimble/pkgs/dpdk-0.1.0/src
-  2. Open makeDPDKNim.sh in a text editor. Please make changes to `nim_src` variable to indicate where is your above directory:
+  1. Open makeDPDKNim.sh in a text editor. 
   3. For release builds, set -O3 to gcc and -d:release flags to Nim.
 
     ```
     # User configurable variables start
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
-    # directory containing the DPDK Nim directories dpdkNimInc, rteErrorWrapper and extraCHdrs4Nim
-      nim_src="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0/src"
-    
     # gcc Debugging flags for easier development, leave blank for production or use -O3
     # For development set "-g3 -g"
     # For release set     "-O3"
-      debug_flags="-O3" # release
+    		debug_flags="-O3" # release
     
     # Nim flags
     # For development set ""
     # for release set     "-d:release"
-      nim_flags="-d:release" 
+    		nim_flags="-d:release" 
     
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # User configurable paths end
 
     ```
   3. Allow Easy Access to makeDPDKNim.sh
-    You can leave `makeDPDKNim.sh` where it is or if you prefer allow global access to `makeDPDKNim.sh` by putting a copy or symlink in PATH directory eg. `/usr/local/bin/` or exporting it in `~/.bashrc`
+    You can leave `makeDPDKNim.sh` where it is or if you prefer access from anywhere, export it in `~/.bashrc`
 
-    export PATH="/home/ubuntu/.nimble/pkgs/dpdk-0.1.0:$PATH"
+    export PATH="~/.nimble/pkgs/dpdk-0.1.0:$PATH"
 
     Exit your shell and restart to source changes.
 
@@ -238,7 +233,7 @@ The Nim examples uses the Nim DPDK bindings.
 #### Nim DPDK helloworld
   1. Change to the DPDK helloworld example.
 
-    `$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/helloworld`
+    `$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/examples/helloworld`
 
   2. Invoke the makeDPDKNim.sh build script.
 
@@ -306,6 +301,42 @@ As for the warning during compilation.
 I am not sure how to get rid of this.
 
 Enjoy!
+
+### Testing in Isolated Network (for Performance Testing)
+
+To enable testing in an isolated network, for the VirtualBox two NIC settings:
+
+```
+	Settings > Network > Adapter 2 > 
+		Attached to: Internal Network
+```
+
+This will simulate your private isolated network with no network noise.
+
+The results are seconds for 1000,000 packets
+
+C rxtx_callbacks 
+
+```
+188
+74
+55
+49
+43
+43
+```
+
+Nim rxtx_callbacks (with "-d:release")
+
+```
+259
+68
+51
+48
+45
+```
+
+So they are pretty close at steady state (43 s for C and 45 s for Nim), in an isolated (no external traffic) network
 
 ### Uninstalling C DPDK and Nim DPDK
 Easiest way is to use nimble

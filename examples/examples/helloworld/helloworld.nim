@@ -31,16 +31,9 @@
 ##    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ## 
 
-
-# sudo sh -c 'echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'
-
 import os
 
-include "dpdk.nim"
-
-# make nil all pointer functions we do not need that the compiler complains about
-proc rte_eal_get_configuration(): ptr rte_config =
-  nil
+import "dpdk"
 
 # declare the C prototype in Nim and export to c (exportc) and call it as a normal C function (cdecl)
 proc lcore_hello(a2: pointer): cint {.exportc: "lcore_hello", cdecl.} =
@@ -55,7 +48,7 @@ proc go(argc: cint; argv: cstringArray): cint =
   ret = rte_eal_init(argc, argv);
   if ret < 0:
     echo "rte_eal_init() failed"
-    rte_panic("Cannot init EAL\n");
+    echo "Cannot init EAL\n";
   else:
     echo "rte_eal_init() ok"
 
@@ -63,7 +56,6 @@ proc go(argc: cint; argv: cstringArray): cint =
 
   if ret < 0:
     echo "rte_eal_mp_remote_launch() failed"
-    rte_panic("rte_eal_mp_remote_launch() failed\n");
   else:
     echo "rte_eal_mp_remote_launch() ok"
 
