@@ -139,7 +139,7 @@ These steps should be done on the guest VM with two NIC setup.
 
   Test:
 
-  `$ cat /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
+  `$ cat /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages`
 
 5. Test with a DPDK example:
 
