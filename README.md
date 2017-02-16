@@ -85,11 +85,11 @@ http://dpdk.org/doc/quick-start
 
 7. Enable SSE CPU flags for the guest VM. Shutdown the guest VM then on the host issue: 
 
-	`$ VBoxManage setextradata "ubt1604" VBoxInternal/CPUM/SSE4.1 1`
+	`$ VBoxManage setextradata "your_vm_name" VBoxInternal/CPUM/SSE4.1 1`
 	
 	To test:
 	
-	`$ VBoxManage getextradata "ubt1604" VBoxInternal/CPUM/SSE4.1`
+	`$ VBoxManage getextradata "your_vm_name" VBoxInternal/CPUM/SSE4.1`
 	
 	Restart the guest VM
 
