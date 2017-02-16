@@ -124,7 +124,7 @@ These steps should be done on the guest VM with two NIC setup.
   `/usr/local/include/dpdk/`
 
   DPDK Examples are:
-  `/usr/local/share/dpdk/Examples`
+  `/usr/local/share/dpdk/examples`
 
 3. Export environment variables to `~/.bashrc`
   ```
