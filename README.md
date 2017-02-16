@@ -109,7 +109,7 @@ These steps should be done on the guest VM with two NIC setup.
 
   ```
   $ sudo apt-get install libpcap-dev gcc make hugepages nim
-  $ sudo apt-get linux-headers-generic
+  $ sudo apt-get install linux-headers-generic
   ```	
 
 2. Download DPDK, untar and
