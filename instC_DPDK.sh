@@ -73,5 +73,8 @@ else
   echo -e "dpdk-stable-16.07.2 has been installed here:\n"
   echo -e "\t$dir1\n\t$dir2\n"
 
+  echo "installing rte_error_wrapper.a"
+  cmd="cp rteErrorWrapper/rte_error_wrapper.a /usr/local/lib/"
+  echo -e "\n$cmd"; eval $cmd
 fi
 

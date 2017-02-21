@@ -27,6 +27,10 @@ if [ -d $dir1 ] &&
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e "\n$cmd"; eval $f_cmd
 
+  echo "uninstalling rte_error_wrapper.a"
+  cmd="rm /usr/local/lib/rte_error_wrapper.a"
+  echo -e "\n$cmd"; eval $cmd
+
 else
 
  echo -e "it appears that C dpdk has not been installed here:\n"

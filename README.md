@@ -14,21 +14,23 @@ Tested on Ubuntu 16.04.1 as a guest operating system (OS) using Virtualbox.
 
 3. extraHdrs/cDecStructs.h - These are extra headers that were made to include the structs that are declared in the DPDK C files that were referenced by the DPDK header files. These are referenced by the files in `dpdk` using Nim pragmas.
 
-4. makeDPDKNim.sh - Bash script to save you time building a Nim DPDK project. It is a copy of gcc switches used by the DPDK Makefiles plus some extras.
+4. examples/examples - Example Nim versions of the DPDK helloworld and rxtx_callbacks examples. Please look here to see how to call the Nim DPDK API.
 
-5. examples/examples - Example Nim versions of the DPDK helloworld and rxtx_callbacks examples. Please look here to see how to call the Nim DPDK API.
+5. examples/C_Examples - Modified versions of the original DPDK C examples. This currently has the C rxtx_callbacks example modified to time the average packet latencies.
 
-6. examples/C_Examples - Modified versions of the original DPDK C examples. This currently has the C rxtx_callbacks example modified to time the average packet latencies.
+6. dpdk.nimble - file to be used by nimble. `nimble install dpdk' will install both C DPDK and Nim bindings. `nimble uninstall dpdk` will uninstall both C DPDK and Nim bindings.
 
-7. dpdk.nimble - file to be used by nimble. `nimble install dpdk' will install both C DPDK and Nim bindings. `nimble uninstall dpdk` will uninstall both C DPDK and Nim bindings.
+7. instC_DPDK.sh - bash script used by dpdk.nimble to automatically install the C DPDK library.
 
-8. instC_DPDK.sh - bash script used by dpdk.nimble to automatically install the C DPDK library.
+8. uninstC_DPDK.sh - bash script used by dpdk.nimble to automatically uninstall the C DPDK library.
 
-9. uninstC_DPDK.sh - bash script used by dpdk.nimble to automatically uninstall the C DPDK library.
+9. logs - Currently has logs comparing the average packet latencies between the DPDK C and Nim versions of rxtx_callbacks. 
 
-10. logs - Currently has logs comparing the average packet latencies between the DPDK C and Nim versions of rxtx_callbacks. 
+10. tests - to test if extraHdrs/cDecStructs.h can be used by Nim.
 
-11. tests - to test if extraHdrs/cDecStructs.h can be used by Nim.
+11. makeDPDKNim.sh - Bash script to save you time building a Nim DPDK project. Used with nim.cfg, it is uses gcc switches used by the DPDK Makefiles plus some extras.
+
+12. nim.cfg - place in your projects directory to use the gcc switches used by the DPDK Makefiles. Invoke makeDPDKNim.sh to compile your project.
 
 ## Getting started
 
@@ -199,7 +201,11 @@ These steps should be done on the guest VM with two NIC setup.
     `$ ./helloworld --help`
 
 ### Using Nim DPDK Bindings
-  1. Open makeDPDKNim.sh in a text editor. 
+
+  1. Copy nim.cfg to your project directory.
+
+  2. Open nim.cfg in a text editor. 
+
   3. For release builds, set -O3 to gcc and -d:release flags to Nim.
 
     ```
@@ -209,19 +215,21 @@ These steps should be done on the guest VM with two NIC setup.
     # gcc Debugging flags for easier development, leave blank for production or use -O3
     # For development set "-g3 -g"
     # For release set     "-O3"
-    		debug_flags="-O3" # release
+    gcc.options.speed="-O3" # release
     
     # Nim flags
     # For development set ""
     # for release set     "-d:release"
-    		nim_flags="-d:release" 
+    -d:release
     
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # User configurable paths end
 
     ```
-  3. Allow Easy Access to makeDPDKNim.sh
-    You can leave `makeDPDKNim.sh` where it is or if you prefer access from anywhere, export it in `~/.bashrc`
+
+
+  4. Allow Easy Access to makeDPDKNim.sh
+    You can leave `makeDPDKNim.sh` where it is, copy it to your project directory or if you prefer access from anywhere, export it in `~/.bashrc`
 
     export PATH="~/.nimble/pkgs/dpdk-0.1.0:$PATH"
 
@@ -231,9 +239,20 @@ These steps should be done on the guest VM with two NIC setup.
 The Nim examples uses the Nim DPDK bindings.
 
 #### Nim DPDK helloworld
-  1. Change to the DPDK helloworld example.
+  1. Create a directory
 
-    `$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/examples/helloworld`
+    ```
+    $ mkdir test
+    $ cd test
+    ```
+    
+  2. Copy the DPDK helloworld example.
+
+    `$ cp ~/.nimble/pkgs/dpdk-0.1.0/examples/examples/helloworld/helloworld.nim ./`
+
+  3. Copy nim.cfg 
+
+    `$ cp ~/.nimble/pkgs/dpdk-0.1.0/nim.cfg ./`
 
   2. Invoke the makeDPDKNim.sh build script.
 
@@ -262,7 +281,10 @@ The Nim examples uses the Nim DPDK bindings.
 
 #### Nim DPDK rxtx_callbacks
 ```
-$ cd ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/rxtx_callbacks
+$ mkdir test
+$ cd test
+$ cp ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/rxtx_callbacks/rxtx_callbacks.nim ./
+$ cp ~/.nimble/pkgs/dpdk-0.1.0/nim.cfg ./
 $ makeDPDKNim.sh rxtx_callbacks.nim
 $ sudo ./rxtx_callbacks -c 1 -n 1 --vdev=eth_pcap0,iface=enp0s3 --vdev=eth_pcap1,iface=enp0s8
 EAL: Detected 2 lcore(s)
