@@ -26,18 +26,6 @@ else
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e $cmd; eval $f_cmd
 
-  cmd="apt-get -y upgrade"
-  f_cmd="echo $PASS | sudo -S $cmd"
-  echo -e $cmd; eval $f_cmd
-
-  cmd="apt-get -y dist-upgrade"
-  f_cmd="echo $PASS | sudo -S $cmd"
-  echo -e "\n$cmd"; eval $f_cmd
-
-  cmd="apt-get -y autoremove --purge"
-  f_cmd="echo $PASS | sudo -S $cmd"
-  echo -e "\n$cmd"; eval $f_cmd
-
   cmd="apt-get -y install libpcap-dev gcc make hugepages linux-headers-generic wget"
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e "\n$cmd"; eval $f_cmd
