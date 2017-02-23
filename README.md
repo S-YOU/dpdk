@@ -8,7 +8,7 @@ Tested on Ubuntu 16.04.1 as a guest operating system (OS) using Virtualbox.
 
 1. dpdk - DPDK Nim include files. These are the Nim API to the C DPDK library. 
 
-2. rteErrorWrapper - There is a `rte_error_wrapper.nim` file which allows Nim to get the C DPDK rte_errno variable via the procedure get_rte_errno() using the archive file rte_error_wrapper.a. This has the Nim prototype:
+2. rteErrorWrapper - There is a `rte_error_wrapper.nim` file which allows Nim to get the C DPDK rte_errno variable via the procedure get_rte_errno() using the archive file librte_error_wrapper.a. This has the Nim prototype:
 
 	`proc get_rte_errno*(): cint {.importc, header: "rte_error_wrapper.h".}`
 
@@ -283,7 +283,7 @@ The Nim examples uses the Nim DPDK bindings.
 ```
 $ mkdir test
 $ cd test
-$ cp ~/.nimble/pkgs/dpdk-0.1.0/examples/dpdkNimExamples/rxtx_callbacks/rxtx_callbacks.nim ./
+$ cp ~/.nimble/pkgs/dpdk-0.1.0/examples/examples/rxtx_callbacks/rxtx_callbacks.nim ./
 $ cp ~/.nimble/pkgs/dpdk-0.1.0/nim.cfg ./
 $ makeDPDKNim.sh rxtx_callbacks.nim
 $ sudo ./rxtx_callbacks -c 1 -n 1 --vdev=eth_pcap0,iface=enp0s3 --vdev=eth_pcap1,iface=enp0s8

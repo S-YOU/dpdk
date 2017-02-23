@@ -27,9 +27,10 @@ if [ -d $dir1 ] &&
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e "\n$cmd"; eval $f_cmd
 
-  echo "uninstalling rte_error_wrapper.a"
-  cmd="rm /usr/local/lib/rte_error_wrapper.a"
-  echo -e "\n$cmd"; eval $cmd
+  echo "uninstalling librte_error_wrapper.a"
+  cmd="rm /usr/local/lib/librte_error_wrapper.a"
+  f_cmd="echo $PASS | sudo -S $cmd"
+  echo -e "\n$cmd"; eval $f_cmd
 
 else
 

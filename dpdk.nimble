@@ -13,7 +13,7 @@ skipDirs = @["logs", "dpdk-stable-16.07.2"]
 
 skipFiles = @["dpdk-16.07.2.tar.xz", "instC_DPDK.sh", "uninstC_DPDK.sh"]
 
-# rteErrorWrapper/rte_error_wrapper.a installed by instC_DPDK.sh
+# rteErrorWrapper/librte_error_wrapper.a installed by instC_DPDK.sh
 skipExt = @["a"]
 
 #  pre uninstall hook to install dpdk 16.07.2
