@@ -27,8 +27,16 @@ if [ -d $dir1 ] &&
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e "\n$cmd"; eval $f_cmd
 
-  echo "uninstalling librte_error_wrapper.a"
-  cmd="rm /usr/local/lib/librte_error_wrapper.a"
+  echo "uninstalling /usr/local/lib/ dpdk files"
+  cmd="rm /usr/local/lib/librte_*"
+  f_cmd="echo $PASS | sudo -S $cmd"
+  echo -e "\n$cmd"; eval $f_cmd
+
+  cmd="rm /usr/local/lib/libdpdk.a"
+  f_cmd="echo $PASS | sudo -S $cmd"
+  echo -e "\n$cmd"; eval $f_cmd
+
+  cmd="rm /usr/local/lib/libethdev.a"
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e "\n$cmd"; eval $f_cmd
 
