@@ -102,7 +102,7 @@ http://dpdk.org/doc/quick-start
     
     Restart the guest VM
 
-  8. In the virtual machine make sure your environment has two Ethernet devices. 
+  8. In the guest VM make sure your environment has two Ethernet devices. 
 
     ```
     $ ip addr
@@ -117,8 +117,6 @@ http://dpdk.org/doc/quick-start
 These steps should be done on the guest VM with two NIC setup.
 
   1. Download required utilities and install C DPDK.
-
-    This step will be automated by nimble.
 
     `$ nimble install dpdk`
 
@@ -166,8 +164,10 @@ These steps should be done on the guest VM with two NIC setup.
      ```
      $ sudo mkdir -p /mnt/huge
      $ sudo mount -t hugetlbfs nodev /mnt/huge
-    `$ sudo sh -c 'echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'`
+     $ sudo sh -c 'echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages'
      ```
+
+     The last step needs to be redone everytime you restart your guest VM.
 
     Test:
 
@@ -320,7 +320,7 @@ As for the warning during compilation.
 
 `rxtx_callbacks.nim(50, 5) Warning: Cannot prove that 'port_conf_default' is initialized. This will become a compile time error in the future. [ProveInit]`
 
-I am not sure how to get rid of this.
+I am not sure how to get rid of this. If anyone knows please email me.
 
 Enjoy!
 
