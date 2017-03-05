@@ -118,7 +118,13 @@ These steps should be done on the guest VM with two NIC setup.
 
   1. Download required utilities and install C DPDK.
 
-    `$ nimble install dpdk`
+    ```
+    $ git clone https://github.com/nimscale/dpdk.git
+    $ cd dpdk/
+    $ nimble install dpdk
+    ```
+
+    Be sure to run nimble in the cloned dpdk directory so it will use the pre install and post uninstall hooks.
 
     This will install both C DPDK library and the Nim DPDK bindings.
 
