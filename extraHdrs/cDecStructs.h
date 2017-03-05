@@ -19,8 +19,9 @@
 #include <rte_pipeline.h>
 #include <rte_mbuf.h>
 #include <rte_reciprocal.h>
-#include <rte_bitmap>
+#include <rte_bitmap.h>
 #include <rte_sched.h>
+#include <rte_ethdev.h>
 
 // start lib/librte_acl/acl.h
 typedef int bits_t;
@@ -643,7 +644,7 @@ struct rte_sched_port {
 
   /* Bitmap */
   struct rte_bitmap *bmp;
-  uint32_t grinder_base_bmp_pos[RTE_SCHED_PORT_N_GRINDERS] __rte_aligned_16;
+  uint32_t grinder_base_bmp_pos[RTE_SCHED_PORT_N_GRINDERS] __attribute__((__rte_aligned_16));
 
   /* Grinders */
   struct rte_sched_grinder grinder[RTE_SCHED_PORT_N_GRINDERS];

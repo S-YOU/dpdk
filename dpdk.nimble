@@ -9,17 +9,20 @@ license       = "Apache"
 
 requires "nim >= 0.16.0"
 
-skipDirs = @["logs"]
+skipDirs = @["logs", "dpdk-stable-16.07.2"]
 
 skipFiles = @["dpdk-16.07.2.tar.xz", "instC_DPDK.sh", "uninstC_DPDK.sh"]
 
-##  pre uninstall hook to installl dpdk 16.07.2
-#before install:
-#  exec "./instC_DPDK.sh"
-#  
-## post uninstall hook uninstalll dpdk 16.07.2
-#after uninstall:
-#  exec "./uninstC_DPDK.sh"
+# rteErrorWrapper/librte_error_wrapper.a installed by instC_DPDK.sh
+skipExt = @["a"]
+
+#  pre uninstall hook to install dpdk 16.07.2
+before install:
+  exec "./instC_DPDK.sh"
+  
+# post uninstall hook uninstall dpdk 16.07.2
+after uninstall:
+  exec "./uninstC_DPDK.sh"
 
 task info, "Installs C DPDK library":
   echo "This installs the Nim bindings (wrapper Nim include files) to the C DPDK library.\n"

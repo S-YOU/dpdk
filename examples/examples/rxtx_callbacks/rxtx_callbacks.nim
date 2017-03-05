@@ -35,7 +35,7 @@ import os
 import strutils
 import times
 
-include "dpdk.nim"
+import "dpdk"
 
 const
   RX_RING_SIZE = 128.uint16
@@ -93,13 +93,17 @@ var finish: float
 # uint64_t *udata64_p = &cacheline1 + 0;
 # uint64_t udata64 = *udata64_p;
 #
-proc get_udata64_ptr(pkt: ptr rte_mbuf): ptr uint64 =
+proc get_udata64_ptr(pkt: ptr rte_mbuf): ptr uint64
+  {.exportc: "get_udata64_ptr", cdecl.} =
+
   var udata64_p: ptr uint64 = cast[ptr uint64](
     cast[uint](addr(pkt[].cacheline1)))
 
   return udata64_p
 
-proc get_udata64(pkt: ptr rte_mbuf): uint64 =
+proc get_udata64(pkt: ptr rte_mbuf): uint64 
+  {.exportc: "get_udata64", cdecl.} =
+
   var udata64_p: ptr uint64 = get_udata64_ptr(pkt)
 
   # uncomment echo below to see all gets from calc_latency ()
@@ -109,7 +113,9 @@ proc get_udata64(pkt: ptr rte_mbuf): uint64 =
   
   return udata64_p[]
 
-proc set_udata64(pkt: ptr rte_mbuf, now: uint64) =
+proc set_udata64(pkt: ptr rte_mbuf, now: uint64) 
+  {.exportc: "set_udata64", cdecl.} =
+
   var udata64_p: ptr uint64 = get_udata64_ptr(pkt)
 
   # uncomment echo below to see all sets from calc_latency ()
@@ -143,12 +149,9 @@ proc calc_latency(port: uint8, qidx: uint16, pkts: ptr ptr rte_mbuf,
   var now: uint64 = rte_rdtsc()
   var i: cuint = 0
 
-  var rte_mbuf_ptr: ptr ptr rte_mbuf =
-    (pkts[]).addr
-
   while i < nb_pkts:
 
-    cycles += now + get_udata64((pkts[].addr + i.int)[])
+    cycles += now - get_udata64((pkts[].addr + i.int)[])
 
     inc(i)
 
@@ -156,7 +159,7 @@ proc calc_latency(port: uint8, qidx: uint16, pkts: ptr ptr rte_mbuf,
   latency_numbers.total_pkts += nb_pkts
 
   if keep_printing:
-    echo "l = latency_numbers.total_cycles = ", latency_numbers.total_cycles,
+    echo "total_cycles = ", latency_numbers.total_cycles,
       ", total_pkts = ", latency_numbers.total_pkts
 
   # the original total_pkts 100 * 1000 * 1000 was too long to wait, 

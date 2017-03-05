@@ -34,7 +34,7 @@
 import os
 import strutils
 
-include "dpdk.nim"
+import "dpdk"
 
 const
   RX_RING_SIZE = 128.uint16

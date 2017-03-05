@@ -27,6 +27,19 @@ if [ -d $dir1 ] &&
   f_cmd="echo $PASS | sudo -S $cmd"
   echo -e "\n$cmd"; eval $f_cmd
 
+  echo "uninstalling /usr/local/lib/ dpdk files"
+  cmd="rm /usr/local/lib/librte_*"
+  f_cmd="echo $PASS | sudo -S $cmd"
+  echo -e "\n$cmd"; eval $f_cmd
+
+  cmd="rm /usr/local/lib/libdpdk.a"
+  f_cmd="echo $PASS | sudo -S $cmd"
+  echo -e "\n$cmd"; eval $f_cmd
+
+  cmd="rm /usr/local/lib/libethdev.a"
+  f_cmd="echo $PASS | sudo -S $cmd"
+  echo -e "\n$cmd"; eval $f_cmd
+
 else
 
  echo -e "it appears that C dpdk has not been installed here:\n"
